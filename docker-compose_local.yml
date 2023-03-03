@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  ms_cronjob:
+    container_name: ms_cronjob
+    build:
+      context: ./
+      dockerfile: Dockerfile_local
+    env_file:
+      - ./env/local.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/home/root/
+      - ms_cronjob_volume:/home/root/application/tls/certificate/
+volumes:
+    ms_cronjob_volume:
