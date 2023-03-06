@@ -1,8 +1,8 @@
 # Ms_cronjob
 
-This have the shared volume "ms_cronjob_volume" for the certificate.
+Docker container.
 
-- Setup
+## Setup
 
 1. Wrinte on terminal:
 ```
