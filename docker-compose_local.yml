@@ -1,7 +1,7 @@
 version: '3.7'
 services:
-  ms_cronjob:
-    container_name: ms_cronjob
+  cimo_ms_cronjob:
+    container_name: cimo_ms_cronjob
     build:
       context: ./
       dockerfile: Dockerfile_local
