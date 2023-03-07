@@ -1,6 +1,6 @@
 # Ms_cronjob
 
-Docker container.
+Microservice cronjob.
 
 ## Setup
 
