@@ -21,6 +21,9 @@ RUN cd ~ \
     && chmod 775 /home/root/ /usr/local/lib/node_modules/ \
     # Apt
     && apt-get update && apt-get install -y \
+    ca-certificates \
+    # Certificate
+    && update-ca-certificates \
     # Tls
     && mkdir -p /home/root/application/tls/certificate/ /var/log/ms_cronjob/tls/ \
     && chown -R node:node /home/root/application/tls/certificate/ /var/log/ms_cronjob/tls/ \
