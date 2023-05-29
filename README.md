@@ -7,5 +7,11 @@ Microservice cronjob.
 1. Wrinte on terminal:
 
 ```
-docker compose -f docker-compose_local.yml --env-file ./env/local.env up -d --build
+docker compose -f docker-compose.yaml --env-file ./env/local.env up -d --build
+```
+
+2. If you have a proxy execute this command (if you use a certificate put it in "certificate" folder):
+
+```
+DOCKERFILE="Dockerfile_local_proxy" docker compose -f docker-compose.yaml --env-file ./env/local.env up -d --build
 ```

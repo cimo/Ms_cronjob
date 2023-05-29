@@ -14,5 +14,9 @@ pnpm-debug.log*
 *.sw?
 
 # cimo +
+.cache/*
+.config/*
+.npm/*
+.pki/*
 application/tls/certificate/*
 !application/tls/certificate/.gitkeep

@@ -1,20 +1,33 @@
-FROM node:18.13.0
+FROM ubuntu:20.04
 
-ARG ENV_NAME
-ARG DOMAIN
+ARG _ENV_NAME
+ARG _DOMAIN
+ARG _TIMEZONE
+ARG _SERVER_PORT
+ARG _VERSION_TAG
 
-ENV ENV_NAME=${ENV_NAME}
-ENV DOMAIN=${DOMAIN}
+ENV ENV_NAME=${_ENV_NAME}
+ENV DOMAIN=${_DOMAIN}
+ENV TZ=${_TIMEZONE}
+ENV VERSION_TAG=${_VERSION_TAG}
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DEBCONF_NOWARNINGS=yes
-ENV TZ="Asia/Tokyo"
+ENV SUDO_FORCE_REMOVE=yes
+
+COPY ./docker/nodejs_18_setup.sh /home/nodejs_18_setup.sh
+COPY ./ /home/root/
 
 RUN cd ~ \
+    # NodeJs
+    && bash /home/nodejs_18_setup.sh \
+    && apt-get update && apt-get install -y nodejs \
     # No root
-    && mkdir -p /home/root/ \
-    && chown -R node:node /home/root/ /usr/local/lib/node_modules/ \
-    && chmod 775 /home/root/ /usr/local/lib/node_modules/ \
+    && groupadd -g 1000 node \
+    && useradd -d /home/root/ -s /bin/bash -u 1000 -g 1000 node \
+    && mkdir -p /home/root/ /usr/local/lib/node_modules/ \
+    && chown -R node:node /home/root/ /usr/local/lib/node_modules/ /usr/local/bin/ \
+    && chmod 775 /home/root/ /usr/local/lib/node_modules/ /usr/local/bin/ \
     # Apt
     && apt-get update && apt-get install -y \
     ca-certificates \
@@ -38,3 +51,5 @@ WORKDIR /home/root/
 CMD chmod +x /home/root/application/tls/script/starter.sh \
     && bash /home/root/application/tls/script/starter.sh \
     && tail -f /dev/null
+
+EXPOSE ${_SERVER_PORT}
