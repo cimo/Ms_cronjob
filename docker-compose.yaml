@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   cimo_ms_cronjob:
     container_name: cimo-ms-cronjob

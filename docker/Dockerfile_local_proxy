@@ -17,10 +17,9 @@ ENV NODE_EXTRA_CA_CERTS=${_PROXY_CERTIFICATE}
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DEBCONF_NOWARNINGS=yes
-ENV SUDO_FORCE_REMOVE=yes
 
 COPY ./docker/nodejs_18_setup.sh /home/nodejs_18_setup.sh
-COPY ./application/tls/certificate/zscaler/* /usr/local/share/ca-certificates/
+COPY ./application/tls/certificate/proxy/* /usr/local/share/ca-certificates/
 
 RUN cd ~ \
     # NodeJs
@@ -54,6 +53,7 @@ WORKDIR /home/root/
 # Tls
 CMD chmod +x /home/root/application/tls/script/starter.sh \
     && bash /home/root/application/tls/script/starter.sh \
+    # Keep running
     && tail -f /dev/null
 
 EXPOSE ${_SERVER_PORT}
