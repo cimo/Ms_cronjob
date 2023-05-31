@@ -19,7 +19,6 @@ pnpm-debug.log*
 .npm/*
 .pki/*
 application/tls/certificate/*
-!application/tls/certificate/**
+!application/tls/certificate/.gitkeep
 application/tls/certificate/proxy/*
 !application/tls/certificate/proxy/.gitkeep
-!application/tls/certificate/.gitkeep
