@@ -16,6 +16,7 @@ pnpm-debug.log*
 # cimo +
 .cache/*
 .config/*
+.local/*
 .npm/*
 .pki/*
 application/tls/certificate/*
@@ -23,3 +24,5 @@ application/tls/certificate/*
 !application/tls/certificate/.gitkeep
 application/tls/certificate/proxy/*
 !application/tls/certificate/proxy/.gitkeep
+env/*
+!env/local.env.public
