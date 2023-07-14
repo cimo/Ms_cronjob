@@ -12,7 +12,7 @@ Rename "/env/local.env.public" in "/env/local.env" and adjust the variable for y
 docker compose -f docker-compose.yaml --env-file ./env/local.env up --detach --build --pull "always"
 ```
 
-2. If you have a proxy execute this command (if you use a certificate put it in "/certificate/proxy/" folder):
+2. If you have a proxy execute this command (if you use a certificate put it in "/application/tls/certificate/proxy/" folder):
 
 ```
 DOCKERFILE="Dockerfile_local_proxy" docker compose -f docker-compose.yaml --env-file ./env/local.env up --detach --build --pull "always"
@@ -26,7 +26,7 @@ DOCKERFILE="Dockerfile_local_proxy" docker compose -f docker-compose.yaml --env-
 docker-compose -f docker-compose.yaml --env-file ./env/local.env up --detach --build --pull "always"
 ```
 
-2. If you have a proxy execute this command (if you use a certificate put it in "/certificate/proxy/" folder):
+2. If you have a proxy execute this command (if you use a certificate put it in "/application/tls/certificate/proxy/" folder):
 
 ```
 DOCKERFILE="Dockerfile_local_proxy" docker-compose -f docker-compose.yaml --env-file ./env/local.env up --detach --build --pull "always"
