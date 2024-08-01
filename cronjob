@@ -1,1 +1,0 @@
-@reboot /bin/bash /home/root/application/tls/script/starter.sh > /var/log/ms_cronjob/tls/starter.log 2>&1

@@ -1,12 +1,41 @@
 #!/bin/bash
 
-rm /home/root/application/tls/certificate/tls.key
-rm /home/root/application/tls/certificate/tls.crt
+PATH_CRT="/home/root/application/tls/certificate/tls.crt"
+PATH_KEY="/home/root/application/tls/certificate/tls.key"
+PATH_LOG="/home/root/log/tls.log"
 
-openssl req -x509 -newkey rsa:4096 -sha256 -days 365 -nodes \
-    -keyout /home/root/application/tls/certificate/tls.key \
-    -out /home/root/application/tls/certificate/tls.crt \
-    -addext "subjectAltName=DNS:localhost" \
-    -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=CIMO/CN=$DOMAIN" > /var/log/ms_cronjob/tls/starter.log 2>&1
+generate() {
+    echo "Generate new certificate." >> "$PATH_LOG"
 
-chmod 0644 /home/root/application/tls/certificate/tls.key
+    openssl req -x509 -newkey rsa:4096 -sha256 -days 365 -nodes \
+        -keyout "$PATH_KEY" \
+        -out "$PATH_CRT" \
+        -addext "subjectAltName=DNS:localhost,\
+            DNS:cimo-ms-antivirus,\
+            DNS:cimo-ms-automate-test,\
+            DNS:cimo-ms-cronjob,\
+            DNS:cimo-ms-file-converter,\
+            DNS:cimo-ms-ocr" \
+        -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=CIMO/CN=$DOMAIN" >> "$PATH_LOG" 2>&1
+
+    chmod 0644 "$PATH_KEY"
+}
+
+if [ -f "$PATH_CRT" ];
+then
+    expiry=$(openssl x509 -enddate -noout -in "$PATH_CRT" | cut -d= -f2)
+    expiryTimestamp=$(date -d "$expiry" +%s)
+    currentDateTimestamp=$(date +%s)
+    expiryDifference=$((expiryTimestamp - currentDateTimestamp))
+
+    if [ "$expiryDifference" -lt 259200 ];
+    then
+        echo "Current certificate expires within 3 days." >> "$PATH_LOG"
+
+        generate
+    fi
+else
+    echo "Certificate does not exist." >> "$PATH_LOG"
+
+    generate
+fi

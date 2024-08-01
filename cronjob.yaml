@@ -1,0 +1,7 @@
+jobs:
+  - name: db_backup
+    command: ls /home/root/log/ > /home/root/log/cron.log 2>&1
+    shell: /bin/bash
+    schedule: "2 * * * *"
+    utc: false
+    timezone: Asia/Tokyo
