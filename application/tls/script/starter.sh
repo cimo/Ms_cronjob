@@ -1,8 +1,8 @@
 #!/bin/bash
 
-PATH_CRT="/home/root/application/tls/certificate/tls.crt"
-PATH_KEY="/home/root/application/tls/certificate/tls.key"
-PATH_LOG="/home/root/log/tls.log"
+PATH_CRT="${PATH_ROOT}application/tls/certificate/tls.crt"
+PATH_KEY="${PATH_ROOT}application/tls/certificate/tls.key"
+PATH_LOG="${PATH_ROOT}log/tls.log"
 
 generate() {
     echo "Generate new certificate." >> "$PATH_LOG"
