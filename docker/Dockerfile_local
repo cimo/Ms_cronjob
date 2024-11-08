@@ -66,4 +66,4 @@ CMD chmod +x ${PATH_ROOT}application/tls/script/starter.sh \
     # Keep running
     && tail -f /dev/null
 
-EXPOSE ${_SERVER_PORT}
+EXPOSE ${SERVER_PORT}
