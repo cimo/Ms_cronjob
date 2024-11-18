@@ -31,7 +31,7 @@ RUN cd ~ \
     # No root
     && groupadd -g 1000 pyuser \
     && useradd -d ${PATH_ROOT} -s /bin/bash -u 1000 -g 1000 pyuser \
-    && mkdir -p ${PATH_ROOT} ${PATH_ROOT}file_share/certificate/ ${PATH_ROOT}file_share/db_backup/ ${PATH_ROOT}file_share/pod/ \
+    && mkdir -p ${PATH_ROOT} ${PATH_ROOT}file_share/certificate/ \
     && chown -R pyuser:pyuser ${PATH_ROOT} \
     && chmod -R 775 ${PATH_ROOT} \
     # Apt
@@ -39,10 +39,6 @@ RUN cd ~ \
     fonts-noto \
     fonts-noto-cjk \
     postgresql-client \
-    libpcre3-dev \
-    # External library
-    && wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb \
-    && dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb \
     # Clean
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean -y \
