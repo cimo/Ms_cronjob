@@ -33,3 +33,5 @@ __pycache__
 *.py[co]
 file_share/certificate/*
 !file_share/certificate/.gitkeep
+file_share/db_backup/*
+!file_share/db_backup/.gitkeep
