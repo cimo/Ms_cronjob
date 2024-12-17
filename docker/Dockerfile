@@ -18,12 +18,12 @@ ENV VERSION_TAG=${_VERSION_TAG}
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DEBCONF_NOWARNINGS=yes
+ENV SUDO_FORCE_REMOVE=yes
 ENV PATH="${PATH}:${PATH_ROOT}.local/bin/:/root/.local/bin/"
 ENV PYTHONPATH="${PATH_ROOT}"
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
-ENV SUDO_FORCE_REMOVE=yes
 
 COPY ./application/tls/certificate/proxy/ /usr/local/share/ca-certificates/
 COPY ./ ${PATH_ROOT}
@@ -55,15 +55,16 @@ USER pyuser
 
 WORKDIR ${PATH_ROOT}
 
-RUN python3 -m pip install pip --upgrade \
-    && python3 -m pip install --user --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org -r ${PATH_ROOT}application/requirements.txt
-
 # Tls
-CMD chmod +x ${PATH_ROOT}application/tls/script/starter.sh \
+RUN chmod +x ${PATH_ROOT}application/tls/script/starter.sh \
     && bash ${PATH_ROOT}application/tls/script/starter.sh \
     && find ${PATH_ROOT}application/tls/certificate/ -maxdepth 1 -type f -exec cp {} ${PATH_ROOT}file_share/certificate/ \; \
-    # DB backup
-    && chmod +x ${PATH_ROOT}application/db_backup/script/dump.sh \
+    # Pip
+    && python3 -m pip install pip --upgrade \
+    && python3 -m pip install --user --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org -r ${PATH_ROOT}application/requirements.txt
+
+# DB backup
+CMD chmod +x ${PATH_ROOT}application/db_backup/script/dump.sh \
     # Cron
     && yacron -c ${PATH_ROOT}cronjob.yaml -v \
     && yacron -c ${PATH_ROOT}cronjob.yaml \
