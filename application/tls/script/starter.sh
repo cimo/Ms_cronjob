@@ -16,7 +16,7 @@ generate() {
             DNS:cimo-ms-cronjob,\
             DNS:cimo-ms-file-converter,\
             DNS:cimo-ms-ocr" \
-        -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=CIMO/CN=${DOMAIN}" >> "${pathLog}" 2>&1
+        -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=${DOMAIN}" >> "${pathLog}" 2>&1
 
     chmod 0644 "${pathKey}"
 }
