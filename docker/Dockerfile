@@ -32,10 +32,10 @@ COPY ./ ${PATH_ROOT}
 
 RUN cd ~ \
     # No root
-    && mkdir -p ${PATH_ROOT} /var/log/django/ \
+    && mkdir -p ${PATH_ROOT} ${PATH_ROOT}file_share/certificate/ ${PATH_ROOT}file_share/db_backup/ \
     && useradd -U pyuser -d ${PATH_ROOT} -s /bin/bash \
-    && chown -R pyuser:pyuser ${PATH_ROOT} /var/log/django/ \
-    && chmod -R 775 ${PATH_ROOT} /var/log/django/ \
+    && chown -R pyuser:pyuser ${PATH_ROOT} ${PATH_ROOT}file_share/certificate/ ${PATH_ROOT}file_share/db_backup/ \
+    && chmod -R 775 ${PATH_ROOT} ${PATH_ROOT}file_share/certificate/ ${PATH_ROOT}file_share/db_backup/ \
     # Update
     && VERSION_CODENAME=$(grep VERSION_CODENAME= /etc/os-release | cut -d= -f2) \
     && chmod -R 0644 /usr/local/share/ca-certificates/ \
