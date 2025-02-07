@@ -2,7 +2,14 @@
 
 pathCrt="${PATH_ROOT}application/tls/certificate/tls.crt"
 pathKey="${PATH_ROOT}application/tls/certificate/tls.key"
+pathPem="${PATH_ROOT}application/tls/certificate/tls.pem"
 pathLog="${PATH_ROOT}log/tls.log"
+
+concatenate() {
+    echo "Concatenate in pem." >> "${pathLog}"
+
+    cat "${pathCrt}" "${pathKey}" > "${pathPem}"
+}
 
 generate() {
     echo "Generate new certificate." >> "${pathLog}"
@@ -19,6 +26,8 @@ generate() {
         -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=${DOMAIN}" >> "${pathLog}" 2>&1
 
     chmod 0644 "${pathKey}"
+
+    concatenate
 }
 
 if [ -f "${pathCrt}" ];
