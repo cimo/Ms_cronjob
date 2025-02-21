@@ -21,6 +21,10 @@ application/tls/certificate/*
 !application/tls/certificate/**/
 application/tls/certificate/proxy/*
 !application/tls/certificate/proxy/.gitkeep
+file_share/certificate/*
+!file_share/certificate/.gitkeep
+file_share/db_backup/*
+!file_share/db_backup/.gitkeep
 log/*
 !log/.gitkeep
 # ---
@@ -31,7 +35,3 @@ __pycache__
 *.egg-info
 *.pot
 *.py[co]
-file_share/certificate/*
-!file_share/certificate/.gitkeep
-file_share/db_backup/*
-!file_share/db_backup/.gitkeep
