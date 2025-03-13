@@ -1,4 +1,11 @@
 .DS_Store
+MANIFEST
+__pycache__
+.coverage
+.tox/
+*.egg-info
+*.pot
+*.py[co]
 
 # Log files
 npm-debug.log*
@@ -28,10 +35,3 @@ file_share/db_backup/*
 log/*
 !log/.gitkeep
 # ---
-MANIFEST
-__pycache__
-.coverage
-.tox/
-*.egg-info
-*.pot
-*.py[co]
