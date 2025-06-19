@@ -21,9 +21,8 @@ pnpm-debug.log*
 *.sw?
 
 # cimo +
-.cache/*
-.config/*
-.local/*
+.cache
+.local
 application/tls/certificate/*
 !application/tls/certificate/**/
 application/tls/certificate/proxy/*
@@ -34,4 +33,3 @@ file_share/db_backup/*
 !file_share/db_backup/.gitkeep
 log/*
 !log/.gitkeep
-# ---
