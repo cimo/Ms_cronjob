@@ -24,9 +24,8 @@ pnpm-debug.log*
 .cache
 .local
 application/tls/certificate/*
-!application/tls/certificate/**/
-application/tls/certificate/proxy/*
-!application/tls/certificate/proxy/.gitkeep
+!application/tls/certificate/.gitkeep
+!application/tls/certificate/proxy
 file_share/certificate/*
 !file_share/certificate/.gitkeep
 file_share/db_backup/*

@@ -17,6 +17,8 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env build --no-cach
 docker compose -f docker-compose.yaml --env-file ./env/local.env up --detach --pull "always"
 ```
 
+3. Copy the file "/application/tls/certificate/proxy/ZscalerRootCa.crt" in "/certificate/proxy/" folder for each branch and start the docker build.
+
 ## Reset
 
 1. Remove this from the root:
@@ -26,5 +28,6 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env up --detach --p
     - .local
     - application/tls/certificate/tls.crt
     - application/tls/certificate/tls.key
+    - application/tls/certificate/tls.pem
 
 2. Follow the "Installation" instructions.

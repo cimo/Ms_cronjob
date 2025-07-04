@@ -57,12 +57,8 @@ USER pyuser
 
 WORKDIR ${PATH_ROOT}
 
-# Tls
-RUN chmod +x ${PATH_ROOT}application/tls/script/starter.sh \
-    && bash ${PATH_ROOT}application/tls/script/starter.sh \
-    && find ${PATH_ROOT}application/tls/certificate/ -maxdepth 1 -type f -exec cp {} ${PATH_ROOT}file_share/certificate/ \; \
-    # Pip
-    && python3 -m pip install pip --upgrade \
+# Pip
+RUN python3 -m pip install pip --upgrade \
     && python3 -m pip install --user --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org -r ${PATH_ROOT}application/requirements.txt
 
 # DB backup
