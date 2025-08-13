@@ -24,7 +24,9 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env up --detach --p
 1. Remove this from the root:
 
     - .cache
+    - .config
     - .local
+    - .pki
     - application/tls/certificate/tls.crt
     - application/tls/certificate/tls.key
     - application/tls/certificate/tls.pem

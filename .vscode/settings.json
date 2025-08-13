@@ -2,10 +2,11 @@
     "l13Diff.exclude": [
         ".git",
         ".cache",
+        ".config",
         ".local",
+        ".pki",
         "file_share",
-        "log",
-        "kubernetes"
+        "log"
     ],
     "l13Diff.ignoreEndOfLine": false,
     "l13Diff.ignoreTrimWhitespace": "default",
