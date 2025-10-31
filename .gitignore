@@ -22,9 +22,7 @@ pnpm-debug.log*
 
 # cimo +
 .cache
-.config
 .local
-.pki
 application/tls/certificate/*
 !application/tls/certificate/.gitkeep
 application/tls/certificate/proxy/*
