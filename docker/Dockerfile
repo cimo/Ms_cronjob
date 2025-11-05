@@ -60,10 +60,8 @@ WORKDIR ${PATH_ROOT}
 RUN python3 -m pip install pip --upgrade \
     && python3 -m pip install --user --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org -r ${PATH_ROOT}application/requirements.txt
 
-# DB backup
-CMD chmod +x ${PATH_ROOT}application/db_backup/script/dump.sh \
-    # Cron
-    && yacron -c ${PATH_ROOT}cronjob.yaml -v \
+# Cron
+CMD yacron -c ${PATH_ROOT}cronjob.yaml -v \
     && yacron -c ${PATH_ROOT}cronjob.yaml \
     # Keep running
     && tail -f /dev/null
