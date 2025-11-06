@@ -4,7 +4,7 @@ Microservice cronjob.
 
 ## Installation
 
-1. For the proxy, copy the xxx.crt file in "/application/tls/certificate/proxy/" folder before start the docker build.
+1. For the proxy, copy the xxx.crt file in "/file_share/certificate/proxy/" folder before start the build.
 
 2. For full build write on terminal:
 
