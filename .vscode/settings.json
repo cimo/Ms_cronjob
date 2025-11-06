@@ -1,10 +1,18 @@
 {
+    "typescript.tsdk": "application/tls/node_modules/typescript/lib",
     "l13Diff.exclude": [
         ".git",
         ".cache",
         ".local",
+        ".ms_cronjob-volume",
+        ".npm",
+        "application",
+        "dist",
+        "file",
         "file_share",
-        "log"
+        "log",
+        "node_modules",
+        "package-lock.json"
     ],
     "l13Diff.ignoreEndOfLine": false,
     "l13Diff.ignoreTrimWhitespace": "default",

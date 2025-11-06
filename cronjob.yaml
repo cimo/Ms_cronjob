@@ -1,7 +1,0 @@
-jobs:
-  - name: test
-    command: ls ${PATH_ROOT}log/ > ${PATH_ROOT}log/cron.log 2>&1
-    shell: /bin/bash
-    schedule: "2 * * * *"
-    utc: false
-    timezone: Asia/Tokyo

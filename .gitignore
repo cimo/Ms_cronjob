@@ -23,13 +23,11 @@ pnpm-debug.log*
 # cimo +
 .cache
 .local
-application/tls/certificate/*
-!application/tls/certificate/.gitkeep
-application/tls/certificate/proxy/*
-!application/tls/certificate/proxy/.gitkeep
+.npm
+dist
 file_share/certificate/*
 !file_share/certificate/.gitkeep
-file_share/db_backup/*
-!file_share/db_backup/.gitkeep
 log/*
 !log/.gitkeep
+node_modules
+package-lock.json

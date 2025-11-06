@@ -1,8 +1,8 @@
 #!/bin/bash
 
-pathCrt="${PATH_ROOT}application/tls/certificate/tls.crt"
-pathKey="${PATH_ROOT}application/tls/certificate/tls.key"
-pathPem="${PATH_ROOT}application/tls/certificate/tls.pem"
+pathCrt="${PATH_ROOT}file_share/certificate/tls.crt"
+pathKey="${PATH_ROOT}file_share/certificate/tls.key"
+pathPem="${PATH_ROOT}file_share/certificate/tls.pem"
 pathLog="${PATH_ROOT}log/tls.log"
 
 concatenate() {
@@ -18,6 +18,7 @@ generate() {
         -keyout "${pathKey}" \
         -out "${pathCrt}" \
         -addext "subjectAltName=DNS:localhost,\
+            DNS:cimo-ms-ai,\
             DNS:cimo-ms-antivirus,\
             DNS:cimo-ms-automate-test,\
             DNS:cimo-ms-cronjob,\
