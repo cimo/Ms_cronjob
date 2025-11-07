@@ -21,8 +21,6 @@ pnpm-debug.log*
 *.sw?
 
 # cimo +
-.cache
-.local
 .npm
 dist
 file_share/certificate/*

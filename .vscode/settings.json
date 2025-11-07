@@ -2,9 +2,6 @@
     "typescript.tsdk": "application/tls/node_modules/typescript/lib",
     "l13Diff.exclude": [
         ".git",
-        ".cache",
-        ".local",
-        ".ms_cronjob-volume",
         ".npm",
         "application",
         "dist",

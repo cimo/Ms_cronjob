@@ -23,8 +23,6 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env up --detach --p
 
 1. Remove this from the root:
 
-    - .cache
-    - .local
     - .npm
 
 2. Follow the "Installation" instructions.
