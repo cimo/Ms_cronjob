@@ -34,11 +34,11 @@ generate() {
 if [ -f "${pathCrt}" ];
 then
     expiry=$(openssl x509 -enddate -noout -in "${pathCrt}" | cut -d= -f2)
-    expiryTimestamp=$(date -d "${expiry}" +%s)
+    expiryTimestamp=$(date -d ${expiry} +%s)
     currentDateTimestamp=$(date +%s)
-    expiryDifference=$(("${expiryTimestamp}" - "${currentDateTimestamp}"))
+    expiryDifference=$((${expiryTimestamp} - ${currentDateTimestamp}))
 
-    if [ "${expiryDifference}" -lt 259200 ];
+    if [ ${expiryDifference} -lt 259200 ];
     then
         echo "Current certificate expires within 3 days." >> "${pathLog}"
 
