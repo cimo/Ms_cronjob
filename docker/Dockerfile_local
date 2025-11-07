@@ -54,7 +54,7 @@ WORKDIR ${PATH_ROOT}
 CMD bash ${PATH_ROOT}script/application_tls.sh \
     # Npm - Application tls
     && cd ${PATH_ROOT}application/tls/ \
-    && rm -rf ${PATH_ROOT}application/tls/node_modules/ ${PATH_ROOT}application/tls/package-lock.json \
+    && rm -rf node_modules/ package-lock.json \
     && npm install \
     && npm run execute \
     && cd ${PATH_ROOT}
