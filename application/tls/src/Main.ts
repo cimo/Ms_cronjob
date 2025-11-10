@@ -20,7 +20,6 @@ export const URL_CORS_ORIGIN = Ce.checkVariable("MS_C_URL_CORS_ORIGIN") || (proc
 export const PATH_CERTIFICATE_KEY = Ce.checkVariable("MS_C_PATH_CERTIFICATE_KEY");
 export const PATH_CERTIFICATE_CRT = Ce.checkVariable("MS_C_PATH_CERTIFICATE_CRT");
 export const PATH_FILE = Ce.checkVariable("MS_C_PATH_FILE");
-export const PATH_FILE_SHARE = Ce.checkVariable("MS_C_PATH_FILE_SHARE");
 export const PATH_LOG = Ce.checkVariable("MS_C_PATH_LOG");
 export const PATH_SCRIPT = Ce.checkVariable("MS_C_PATH_SCRIPT");
 

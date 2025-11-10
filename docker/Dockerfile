@@ -21,16 +21,16 @@ ENV DEBCONF_NOWARNINGS=yes
 ENV SUDO_FORCE_REMOVE=yes
 ENV NODE_OPTIONS=--use-openssl-ca
 
-COPY ./file_share/certificate/proxy/* /usr/local/share/ca-certificates/
+COPY ./docker/certificate/proxy/* /usr/local/share/ca-certificates/
 COPY ./docker/NotoSansJP-Regular.ttf /usr/share/fonts/truetype/noto/
 COPY ./ ${PATH_ROOT}
 
 RUN cd ~ \
     # No root
     && useradd -U node -d ${PATH_ROOT} -s /bin/bash \
-    && mkdir -p ${PATH_ROOT} ${PATH_ROOT}file_share/certificate/ \
-    && chown -R node:node ${PATH_ROOT} ${PATH_ROOT}file_share/certificate/ \
-    && chmod -R 775 ${PATH_ROOT} ${PATH_ROOT}file_share/certificate/ \
+    && mkdir -p ${PATH_ROOT} ${PATH_ROOT}.file_share/certificate/ ${PATH_ROOT}.file_share/certificate/proxy/ \
+    && chown -R node:node ${PATH_ROOT} ${PATH_ROOT}.file_share/certificate/ ${PATH_ROOT}.file_share/certificate/proxy/ \
+    && chmod -R 775 ${PATH_ROOT} ${PATH_ROOT}.file_share/certificate/ ${PATH_ROOT}.file_share/certificate/proxy/ \
     # Update
     && VERSION_CODENAME=$(grep VERSION_CODENAME= /etc/os-release | cut -d= -f2) \
     && chmod -R 0644 /usr/local/share/ca-certificates/ \
@@ -63,6 +63,6 @@ RUN cd ${PATH_ROOT}application/tls/ \
 # Bash - Application tls
 CMD bash ${PATH_ROOT}script/application_tls.sh \
     # Node
-    node ${PATH_ROOT}dist/src/controller/Server.js
+    node ${PATH_ROOT}dist/src/Main.js
 
 EXPOSE ${SERVER_PORT}

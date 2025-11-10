@@ -17,7 +17,7 @@ services:
       - 127.0.0.1:${SERVER_PORT}:${SERVER_PORT}
     volumes:
       - ./:${PATH_ROOT}
-      - ms_cronjob-volume:${PATH_ROOT}file_share/
+      - ms_cronjob-volume:${PATH_ROOT}.file_share/
       - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   ms_cronjob-volume:

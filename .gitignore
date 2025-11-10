@@ -21,10 +21,12 @@ pnpm-debug.log*
 *.sw?
 
 # cimo +
+.file_share
 .npm
 dist
-file_share/certificate/*
-!file_share/certificate/.gitkeep
+docker/certificate/**/*
+!docker/certificate/**/
+!docker/certificate/**/.gitkeep
 log/*
 !log/.gitkeep
 node_modules

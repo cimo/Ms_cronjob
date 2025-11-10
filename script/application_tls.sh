@@ -1,9 +1,15 @@
 #!/bin/bash
 
-pathCrt="${PATH_ROOT}file_share/certificate/tls.crt"
-pathKey="${PATH_ROOT}file_share/certificate/tls.key"
-pathPem="${PATH_ROOT}file_share/certificate/tls.pem"
+pathCrt="${PATH_ROOT}.file_share/certificate/tls.crt"
+pathKey="${PATH_ROOT}.file_share/certificate/tls.key"
+pathPem="${PATH_ROOT}.file_share/certificate/tls.pem"
 pathLog="${PATH_ROOT}log/tls.log"
+
+proxy() {
+    echo "Copy proxy certificate." >> "${pathLog}"
+
+    cp ${PATH_ROOT}docker/certificate/proxy/* "${PATH_ROOT}.file_share/certificate/proxy/"
+}
 
 concatenate() {
     echo "Concatenate in pem." >> "${pathLog}"
@@ -51,3 +57,5 @@ else
 
     generate
 fi
+
+proxy
