@@ -4,18 +4,18 @@ Microservice cronjob.
 
 ## Installation
 
-1. In case of proxy, put the certificate in "/docker/certificate/proxy/" folder before start the build.
+1. In case of proxy, put the certificate in "/certificate/proxy/" folder before start the build.
 
-2. For full build write on terminal:
-
-```
-bash docker/container_execute.sh
-```
-
-3. For light build (just env variable change) remove the container and write on terminal:
+2. For build and up write on terminal:
 
 ```
-bash docker/container_execute.sh "fast"
+bash docker/container_execute.sh "local" "build-up"
+```
+
+3. Just for up write on terminal:
+
+```
+bash docker/container_execute.sh "local" "up"
 ```
 
 ## Reset

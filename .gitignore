@@ -24,9 +24,9 @@ pnpm-debug.log*
 .file_share
 .npm
 dist
-docker/certificate/**/*
-!docker/certificate/**/
-!docker/certificate/**/.gitkeep
+certificate/**/*
+!certificate/**/
+!certificate/**/.gitkeep
 log/*
 !log/.gitkeep
 node_modules

@@ -8,7 +8,7 @@ pathLog="${PATH_ROOT}log/tls.log"
 proxy() {
     echo "Copy proxy certificate." >> "${pathLog}"
 
-    cp ${PATH_ROOT}docker/certificate/proxy/* "${PATH_ROOT}.file_share/certificate/proxy/"
+    cp ${PATH_ROOT}certificate/proxy/* "${PATH_ROOT}.file_share/certificate/proxy/"
 }
 
 concatenate() {
