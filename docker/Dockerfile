@@ -63,6 +63,6 @@ RUN cd ${PATH_ROOT}application/tls/ \
 # Bash - Application tls
 CMD bash ${PATH_ROOT}script/application_tls.sh \
     # Node
-    node ${PATH_ROOT}dist/src/Main.js
+    node ${PATH_ROOT}application/tls/dist/src/Main.js
 
 EXPOSE ${SERVER_PORT}
