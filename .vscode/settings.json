@@ -1,13 +1,13 @@
 {
-    "typescript.tsdk": "application/tls/node_modules/typescript/lib",
+    "typescript.tsdk": "node_modules/typescript/lib",
     "l13Diff.exclude": [
         ".git",
         ".file_share",
         ".npm",
-        "application/**/node_modules",
-        "application/**/package-lock.json",
         "dist",
-        "log"
+        "log",
+        "node_modules",
+        "package-lock.json"
     ],
     "l13Diff.ignoreEndOfLine": false,
     "l13Diff.ignoreTrimWhitespace": "default",

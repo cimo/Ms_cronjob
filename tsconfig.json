@@ -23,7 +23,9 @@
         "eslint.customRule.ts",
         "global.d.ts",
         "src/**/*.ts",
-        "src/**/*.tsx"
+        "src/**/*.tsx",
+        "file/input/**/*.ts",
+        "file/input/**/*.tsx"
     ],
-    "exclude": ["dist", "node_modules"]
+    "exclude": ["dist", "node_modules", "public"]
 }

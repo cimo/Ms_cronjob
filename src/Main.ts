@@ -4,7 +4,7 @@ import { Cc } from "@cimo/cronjob/dist/src/Main";
 
 export const ENV_NAME = Ce.checkVariable("ENV_NAME") || (process.env.ENV_NAME as string);
 
-Ce.loadFile(`../../env/${ENV_NAME}.env`);
+Ce.loadFile(`./env/${ENV_NAME}.env`);
 
 export const DOMAIN = Ce.checkVariable("DOMAIN") || (process.env.DOMAIN as string);
 export const TIME_ZONE = Ce.checkVariable("TIME_ZONE") || (process.env.TIME_ZONE as string);
@@ -61,5 +61,4 @@ Cc.execute(`${PATH_ROOT}${PATH_FILE}cronjob/`);
 
 keepProcess();
 
-// eslint-disable-next-line no-console
-console.log("Running...");
+writeLog("Main.ts", "Running...");

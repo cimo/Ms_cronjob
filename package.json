@@ -1,12 +1,12 @@
 {
-    "name": "application_tls",
+    "name": "ms_cronjob",
     "version": "1.0.0",
-    "description": "Certificate generator.",
+    "description": "Microservice cronjob.",
     "author": "cimo",
     "license": "MIT",
     "repository": {
-        "type": "",
-        "url": ""
+        "type": "git",
+        "url": "git+https://github.com/cimo/Ms_cronjob.git"
     },
     "scripts": {
         "preinstall": "npx npm-force-resolutions",

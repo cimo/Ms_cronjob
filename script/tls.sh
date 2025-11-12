@@ -1,14 +1,32 @@
 #!/bin/bash
 
+mkdir -p "${PATH_ROOT}.file_share/certificate/proxy/"
+
 pathCrt="${PATH_ROOT}.file_share/certificate/tls.crt"
 pathKey="${PATH_ROOT}.file_share/certificate/tls.key"
 pathPem="${PATH_ROOT}.file_share/certificate/tls.pem"
 pathLog="${PATH_ROOT}log/tls.log"
 
 proxy() {
-    echo "Copy proxy certificate." >> "${pathLog}"
+    source="${PATH_ROOT}certificate/proxy/"
+    target="${PATH_ROOT}.file_share/certificate/proxy/"
 
-    cp ${PATH_ROOT}certificate/proxy/* "${PATH_ROOT}.file_share/certificate/proxy/"
+    if [ "$(ls -A "${source}")" ]
+    then
+        for file in "${source}"*
+        do
+            fileName=$(basename "${file}")
+
+            if [ ! -e "${target}${fileName}" ]
+            then
+                cp "${file}" "${target}"
+
+                echo "Proxy certificate '${fileName}' copied." >> "${pathLog}"
+            else
+                echo "Proxy certificate '${fileName}' already exist." >> "${pathLog}"
+            fi
+        done
+    fi
 }
 
 concatenate() {

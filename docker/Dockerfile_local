@@ -50,13 +50,11 @@ USER node
 
 WORKDIR ${PATH_ROOT}
 
-# Bash - Application tls
-CMD bash ${PATH_ROOT}script/application_tls.sh \
-    # Npm - Application tls
-    && cd ${PATH_ROOT}application/tls/ \
-    && rm -rf node_modules/ package-lock.json \
+# Bash - Tls
+CMD bash ${PATH_ROOT}script/tls.sh \
+    # Npm
+    && rm -rf ${PATH_ROOT}node_modules/ ${PATH_ROOT}package-lock.json \
     && npm install \
-    && npm run execute \
-    && cd ${PATH_ROOT}
+    && npm run execute
 
 EXPOSE ${SERVER_PORT}
