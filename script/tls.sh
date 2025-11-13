@@ -11,7 +11,9 @@ proxy() {
     source="${PATH_ROOT}certificate/proxy/"
     target="${PATH_ROOT}.file_share/certificate/proxy/"
 
-    if [ "$(ls -A "${source}")" ]
+    fileList=$(find "${source}" -maxdepth 1 -type f \( -name "*.crt" -o -name "*.key" -o -name "*.pem" \))
+
+    if [ -n "${fileList}" ]
     then
         for file in "${source}"*
         do
