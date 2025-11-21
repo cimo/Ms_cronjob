@@ -7,30 +7,6 @@ pathKey="${PATH_ROOT}.file_share/certificate/tls.key"
 pathPem="${PATH_ROOT}.file_share/certificate/tls.pem"
 pathLog="${PATH_ROOT}log/tls.log"
 
-proxy() {
-    source="${PATH_ROOT}certificate/proxy/"
-    target="${PATH_ROOT}.file_share/certificate/proxy/"
-
-    fileList=$(find "${source}" -maxdepth 1 -type f \( -name "*.crt" -o -name "*.key" -o -name "*.pem" \))
-
-    if [ -n "${fileList}" ]
-    then
-        for file in "${source}"*
-        do
-            fileName=$(basename "${file}")
-
-            if [ ! -e "${target}${fileName}" ]
-            then
-                cp "${file}" "${target}"
-
-                echo "Proxy certificate '${fileName}' copied." >> "${pathLog}"
-            else
-                echo "Proxy certificate '${fileName}' already exist." >> "${pathLog}"
-            fi
-        done
-    fi
-}
-
 concatenate() {
     echo "Concatenate in pem." >> "${pathLog}"
 
@@ -57,6 +33,32 @@ generate() {
     concatenate
 }
 
+proxy() {
+    source="${PATH_ROOT}certificate/proxy/"
+    target="${PATH_ROOT}.file_share/certificate/proxy/"
+
+    mapfile -d '' -t fileList < <(find "${source}" -type f \( -name '*.crt' -o -name '*.key' -o -name '*.pem' \) -print0 2>/dev/null)
+
+    if [ ${#fileList[@]} -gt 0 ]
+    then
+        for file in "${source}"*
+        do
+            fileName=$(basename "${file}")
+
+            if [ ! -e "${target}${fileName}" ]
+            then
+                cp "${file}" "${target}"
+
+                echo "Proxy certificate '${fileName}' copied." >> "${pathLog}"
+            else
+                echo "Proxy certificate '${fileName}' already exist." >> "${pathLog}"
+            fi
+        done
+    fi
+}
+
+proxy
+
 if [ -f "${pathCrt}" ];
 then
     expiry=$(openssl x509 -enddate -noout -in "${pathCrt}" | cut -d= -f2)
@@ -77,5 +79,3 @@ else
 
     generate
 fi
-
-proxy
