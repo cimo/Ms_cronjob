@@ -18,7 +18,7 @@
     },
     "dependencies": {
         "@cimo/environment": "1.0.18",
-        "@cimo/cronjob": "1.0.3"
+        "@cimo/cronjob": "1.0.5"
     },
     "devDependencies": {
         "typescript": "5.7.2",
