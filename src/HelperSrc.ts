@@ -1,5 +1,5 @@
 import Fs from "fs";
-import { Ce } from "@cimo/environment/dist/src/Main";
+import { Ce } from "@cimo/environment/dist/src/Main.js";
 
 const localeConfiguration: Record<string, { locale: string; currency: string }> = {
     // Europe
