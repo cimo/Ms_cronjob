@@ -18,8 +18,8 @@
         "execute": "nodemon --config nodemon.json"
     },
     "dependencies": {
-        "@cimo/environment": "1.0.20",
-        "@cimo/cronjob": "1.0.7"
+        "@cimo/environment": "1.0.21",
+        "@cimo/cronjob": "1.0.8"
     },
     "devDependencies": {
         "typescript": "5.7.2",
