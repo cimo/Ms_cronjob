@@ -1,38 +1,6 @@
 import Fs from "fs";
 import { Ce } from "@cimo/environment/dist/src/Main.js";
 
-const localeConfiguration: Record<string, { locale: string; currency: string }> = {
-    // Europe
-    it: { locale: "it-IT", currency: "EUR" },
-    fr: { locale: "fr-FR", currency: "EUR" },
-    de: { locale: "de-DE", currency: "EUR" },
-    es: { locale: "es-ES", currency: "EUR" },
-    pt: { locale: "pt-PT", currency: "EUR" },
-    nl: { locale: "nl-NL", currency: "EUR" },
-    ru: { locale: "ru-RU", currency: "RUB" },
-    pl: { locale: "pl-PL", currency: "PLN" },
-    sv: { locale: "sv-SE", currency: "SEK" },
-    // Asia
-    jp: { locale: "ja-JP", currency: "JPY" },
-    cn: { locale: "zh-CN", currency: "CNY" },
-    tw: { locale: "zh-TW", currency: "TWD" },
-    kr: { locale: "ko-KR", currency: "KRW" },
-    in: { locale: "hi-IN", currency: "INR" },
-    th: { locale: "th-TH", currency: "THB" },
-    // America
-    us: { locale: "en-US", currency: "USD" },
-    mx: { locale: "es-MX", currency: "MXN" },
-    br: { locale: "pt-BR", currency: "BRL" },
-    ca: { locale: "fr-CA", currency: "CAD" },
-    // Africa
-    ke: { locale: "sw-KE", currency: "KES" },
-    za: { locale: "af-ZA", currency: "ZAR" },
-    eg: { locale: "ar-EG", currency: "EGP" },
-    // Oceania
-    au: { locale: "en-AU", currency: "AUD" },
-    nz: { locale: "mi-NZ", currency: "NZD" }
-};
-
 export const ENV_NAME = Ce.checkVariable("ENV_NAME") || (process.env["ENV_NAME"] as string);
 
 Ce.loadFile(`./env/${ENV_NAME}.env`);
@@ -53,6 +21,38 @@ export const PATH_CERTIFICATE_CRT = Ce.checkVariable("MS_C_PATH_CERTIFICATE_CRT"
 export const PATH_FILE = Ce.checkVariable("MS_C_PATH_FILE");
 export const PATH_LOG = Ce.checkVariable("MS_C_PATH_LOG");
 export const PATH_SCRIPT = Ce.checkVariable("MS_C_PATH_SCRIPT");
+
+export const localeConfiguration: Record<string, { locale: string; currency: string; dateFormat: string }> = {
+    // Europe
+    it: { locale: "it-IT", currency: "EUR", dateFormat: "b" },
+    fr: { locale: "fr-FR", currency: "EUR", dateFormat: "b" },
+    de: { locale: "de-DE", currency: "EUR", dateFormat: "b" },
+    es: { locale: "es-ES", currency: "EUR", dateFormat: "b" },
+    pt: { locale: "pt-PT", currency: "EUR", dateFormat: "b" },
+    nl: { locale: "nl-NL", currency: "EUR", dateFormat: "b" },
+    ru: { locale: "ru-RU", currency: "RUB", dateFormat: "b" },
+    pl: { locale: "pl-PL", currency: "PLN", dateFormat: "b" },
+    sv: { locale: "sv-SE", currency: "SEK", dateFormat: "b" },
+    // Asia
+    jp: { locale: "ja-JP", currency: "JPY", dateFormat: "a" },
+    cn: { locale: "zh-CN", currency: "CNY", dateFormat: "a" },
+    tw: { locale: "zh-TW", currency: "TWD", dateFormat: "a" },
+    kr: { locale: "ko-KR", currency: "KRW", dateFormat: "a" },
+    in: { locale: "hi-IN", currency: "INR", dateFormat: "a" },
+    th: { locale: "th-TH", currency: "THB", dateFormat: "a" },
+    // America
+    us: { locale: "en-US", currency: "USD", dateFormat: "c" },
+    mx: { locale: "es-MX", currency: "MXN", dateFormat: "c" },
+    br: { locale: "pt-BR", currency: "BRL", dateFormat: "c" },
+    ca: { locale: "fr-CA", currency: "CAD", dateFormat: "c" },
+    // Africa
+    ke: { locale: "sw-KE", currency: "KES", dateFormat: "c" },
+    za: { locale: "af-ZA", currency: "ZAR", dateFormat: "c" },
+    eg: { locale: "ar-EG", currency: "EGP", dateFormat: "c" },
+    // Oceania
+    au: { locale: "en-AU", currency: "AUD", dateFormat: "c" },
+    nz: { locale: "mi-NZ", currency: "NZD", dateFormat: "c" }
+};
 
 export const localeFromEnvName = (): string => {
     let result = ENV_NAME.split("_").pop();

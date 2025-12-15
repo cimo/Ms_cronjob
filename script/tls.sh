@@ -20,12 +20,14 @@ generate() {
         -keyout "${pathKey}" \
         -out "${pathCrt}" \
         -addext "subjectAltName=DNS:localhost,\
-            DNS:cimo-ms-ai,\
+            DNS:cimo-ms-ai-cpu,\
+            DNS:cimo-ms-ai-gpu,\
             DNS:cimo-ms-antivirus,\
             DNS:cimo-ms-automate-test,\
             DNS:cimo-ms-cronjob,\
             DNS:cimo-ms-file-converter,\
-            DNS:cimo-ms-ocr" \
+            DNS:cimo-ms-ocr-cpu,\
+            DNS:cimo-ms-ocr-gpu" \
         -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=${DOMAIN}" >> "${pathLog}" 2>&1
 
     chmod 0644 "${pathKey}"
