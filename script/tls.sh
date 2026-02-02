@@ -5,7 +5,7 @@ mkdir -p "${PATH_ROOT}.file_share/certificate/proxy/"
 pathCrt="${PATH_ROOT}.file_share/certificate/tls.crt"
 pathKey="${PATH_ROOT}.file_share/certificate/tls.key"
 pathPem="${PATH_ROOT}.file_share/certificate/tls.pem"
-pathLog="${PATH_ROOT}log/tls.log"
+pathLog="${PATH_ROOT}${MS_C_PATH_LOG}tls.log"
 
 concatenate() {
     echo "Concatenate in pem." >> "${pathLog}"
