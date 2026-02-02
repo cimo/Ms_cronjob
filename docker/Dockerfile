@@ -66,6 +66,6 @@ CMD \
     # Tls
     bash ${PATH_ROOT}script/tls.sh \
     # Node
-    node ${PATH_ROOT}dist/scr/Main.js
+    && node ${PATH_ROOT}dist/scr/Main.js
 
 EXPOSE ${SERVER_PORT}
