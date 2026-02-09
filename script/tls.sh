@@ -26,6 +26,7 @@ generate() {
             DNS:cimo-ms-automate-test,\
             DNS:cimo-ms-cronjob,\
             DNS:cimo-ms-file-converter,\
+            DNS:cimo-ms-mcp,\
             DNS:cimo-ms-ocr-cpu,\
             DNS:cimo-ms-ocr-gpu" \
         -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=${DOMAIN}" >> "${pathLog}" 2>&1

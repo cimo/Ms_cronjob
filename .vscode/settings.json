@@ -2,9 +2,14 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "l13Diff.exclude": [
         ".git",
+        ".cache",
+        ".config",
         ".file_share",
+        ".local",
         ".npm",
+        ".pki",
         "dist",
+        "certificate",
         "log",
         "node_modules",
         "package-lock.json"
