@@ -26,7 +26,6 @@ bash docker/container_execute.sh "local" "up"
     - .config
     - .file_share
     - .local
-    - .ms_cronjob-volume
     - .npm
     - .pki
     - dist
@@ -34,3 +33,11 @@ bash docker/container_execute.sh "local" "up"
     - package-lock.json
 
 2. Follow the "Installation" instructions.
+
+## Command
+
+1. To force certificate regeneration write on terminal:
+
+    ```
+    bash script/tls.sh "force"
+    ```

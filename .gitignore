@@ -25,9 +25,6 @@ pnpm-debug.log*
 .config
 .file_share
 .local
-.ms_cronjob-volume/**/*
-!.ms_cronjob-volume/**/
-!.ms_cronjob-volume/**/.gitkeep
 .npm
 .pki
 dist
