@@ -1,60 +1,30 @@
 #!/bin/bash
 
+p1=$(printf '%s' "${1}" | xargs)
+p2=$(printf '%s' "${2}" | xargs)
+
+if [ -z "${p1}" ] || [ -z "${p2}" ]
+then
+    echo "tls.sh - Missing parameter."
+
+    exit 1
+fi
+
+parameter1="${1}"
+parameter2="${2}"
+
 # Environment
-chmod +x "script/environment.sh"
-source "script/environment.sh" "${1}"
+chmod +x "./script/environment.sh"
+source "./script/environment.sh" "${parameter1}"
 
-pathCertificate="${PATH_ROOT}.file_share/certificate/"
-pathCaKey="${pathCertificate}ca.key"
-pathCaPem="${pathCertificate}ca.pem"
-pathKey="${pathCertificate}tls.key"
-pathCrt="${pathCertificate}tls.crt"
-pathLog="${PATH_ROOT}${MS_C_PATH_LOG}tls.log"
-
-common() {
-    local source="${1}"
-    local target="${2}"
-
-    mapfile -d '' -t fileList < <(find "${source}" -type f \( -name '*.crt' -o -name '*.key' -o -name '*.pem' \) -print0 2>/dev/null)
-
-    if [ ${#fileList[@]} -gt 0 ]
-    then
-        for file in "${source}"*
-        do
-            fileName=$(basename "${file}")
-
-            if [ ! -e "${target}${fileName}" ]
-            then
-                cp "${file}" "${target}"
-
-                echo "Certificate '${fileName}' copied." >> "${pathLog}"
-            else
-                echo "Certificate '${fileName}' already exist." >> "${pathLog}"
-            fi
-        done
-    fi
-}
-
-custom() {
-    mkdir -p "${PATH_ROOT}.file_share/certificate/custom/"
-
-    source="${PATH_ROOT}certificate/custom/"
-    target="${PATH_ROOT}.file_share/certificate/custom/"
-
-    common "${source}" "${target}"
-}
-
-proxy() {
-    mkdir -p "${PATH_ROOT}.file_share/certificate/proxy/"
-    
-    source="${PATH_ROOT}certificate/proxy/"
-    target="${PATH_ROOT}.file_share/certificate/proxy/"
-
-    common "${source}" "${target}"
-}
+pathCaKey="./certificate/ca.key"
+pathCaPem="./certificate/ca.pem"
+pathKey="./certificate/tls.key"
+pathCrt="./certificate/tls.crt"
+pathLog="${MS_C_PATH_LOG}tls.log"
 
 generate() {
-    echo "Generate new certificate." >> "${pathLog}"
+    echo "Generate certificate."
 
     openssl genrsa -out "${pathCaKey}" 4096 >> "${pathLog}" 2>&1
 
@@ -69,21 +39,17 @@ generate() {
         -addext "subjectAltName=DNS:localhost,DNS:host.docker.internal,DNS:cimo-ms-ai-cpu,DNS:cimo-ms-ai-gpu,DNS:cimo-ms-antivirus,DNS:cimo-ms-automate-test,DNS:cimo-ms-cronjob,DNS:cimo-ms-file-converter,DNS:cimo-ms-mcp,DNS:cimo-ms-ocr-cpu,DNS:cimo-ms-ocr-gpu,IP:127.0.0.1" \
         -addext "extendedKeyUsage=serverAuth" \
         -addext "basicConstraints=CA:FALSE" \
-        -out "${pathCertificate}server.csr" >> "${pathLog}" 2>&1
+        -out "./certificate/tls.csr" >> "${pathLog}" 2>&1
 
-    openssl x509 -req -in "${pathCertificate}server.csr" \
+    openssl x509 -req -in "./certificate/tls.csr" \
         -CA "${pathCaPem}" -CAkey "${pathCaKey}" -CAcreateserial \
         -out "${pathCrt}" -days 365 -sha256 \
         -copy_extensions copy >> "${pathLog}" 2>&1
 
-    rm -f "${pathCertificate}server.csr"
+    rm -f "./certificate/tls.csr"
 
     chmod 600 "${pathKey}"
 }
-
-custom
-
-proxy
 
 if [ -f "${pathCrt}" ]
 then
@@ -92,7 +58,7 @@ then
     currentDateTimestamp=$(date +%s)
     expiryDifference=$((${expiryTimestamp} - ${currentDateTimestamp}))
     
-    if [ "${1}" = "force" ]
+    if [ "${parameter2}" = "force" ]
     then
         generate
     else
@@ -106,7 +72,5 @@ then
         fi
     fi
 else
-    echo "Certificate does not exist." >> "${pathLog}"
-
     generate
 fi

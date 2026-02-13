@@ -23,7 +23,6 @@ pnpm-debug.log*
 # cimo +
 .cache
 .config
-.file_share
 .local
 .npm
 .pki

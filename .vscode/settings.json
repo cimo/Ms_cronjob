@@ -7,8 +7,8 @@
         ".local",
         ".npm",
         ".pki",
-        "dist",
         "certificate",
+        "dist",
         "log",
         "node_modules",
         "package-lock.json"

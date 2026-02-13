@@ -1,6 +1,17 @@
 #!/bin/bash
 
-pathEnvFile="./env/${1}.env"
+p1=$(printf '%s' "${1}" | xargs)
+
+if [ -z "${p1}" ]
+then
+    echo "environment - Missing parameter."
+
+    exit 1
+fi
+
+parameter1="${1}"
+
+pathEnvFile="./env/${parameter1}.env"
 
 if [ -f "${pathEnvFile}" ]
 then

@@ -2,7 +2,7 @@
 
 Microservice cronjob.
 
-It's possible to use a custom certificate, just add it to the "certificate/custom" folder before build the container.
+It's possible to use a custom certificate instead of internal, just add it to the "certificate" folder before build the container.
 
 ## Info:
 
@@ -28,7 +28,6 @@ bash docker/container_execute.sh "local" "up"
 
     - .cache
     - .config
-    - .file_share
     - .local
     - .npm
     - .pki
@@ -43,5 +42,5 @@ bash docker/container_execute.sh "local" "up"
 1. To force certificate regeneration write on terminal:
 
     ```
-    bash script/tls.sh "force"
+    bash script/tls.sh "local" "force"
     ```
