@@ -21,7 +21,7 @@ ENV DEBCONF_NOWARNINGS=yes
 ENV SUDO_FORCE_REMOVE=yes
 ENV NODE_OPTIONS=--use-openssl-ca
 
-COPY ./certificate/proxy/* /usr/local/share/ca-certificates/
+COPY ./certificate/* /usr/local/share/ca-certificates/
 COPY ./docker/NotoSansJP-Regular.ttf /usr/share/fonts/truetype/noto/
 COPY ./docker/NotoSansSymbols2-Regular.ttf /usr/share/fonts/truetype/noto/
 COPY ./docker/NotoColorEmoji-Regular.ttf /usr/share/fonts/truetype/noto/
@@ -31,9 +31,9 @@ COPY ./ ${PATH_ROOT}
 RUN cd ~ \
     # No root
     && useradd -U node -d ${PATH_ROOT} -s /bin/bash \
-    && mkdir -p ${PATH_ROOT} ${PATH_ROOT}.file_share/certificate/ ${PATH_ROOT}.file_share/certificate/proxy/ \
-    && chown -R node:node ${PATH_ROOT} ${PATH_ROOT}.file_share/certificate/ ${PATH_ROOT}.file_share/certificate/proxy/ \
-    && chmod -R 775 ${PATH_ROOT} ${PATH_ROOT}.file_share/certificate/ ${PATH_ROOT}.file_share/certificate/proxy/ \
+    && mkdir -p ${PATH_ROOT} ${PATH_ROOT}.file_share/certificate/ ${PATH_ROOT}.file_share/certificate/custom/ ${PATH_ROOT}.file_share/certificate/proxy/ \
+    && chown -R node:node ${PATH_ROOT} ${PATH_ROOT}.file_share/certificate/ ${PATH_ROOT}.file_share/certificate/custom/ ${PATH_ROOT}.file_share/certificate/proxy/ \
+    && chmod -R 775 ${PATH_ROOT} ${PATH_ROOT}.file_share/certificate/ ${PATH_ROOT}.file_share/certificate/custom/ ${PATH_ROOT}.file_share/certificate/proxy/ \
     # Update
     && VERSION_CODENAME=$(grep VERSION_CODENAME= /etc/os-release | cut -d= -f2) \
     && chmod -R 0644 /usr/local/share/ca-certificates/ \
@@ -63,9 +63,7 @@ RUN \
     && npm run build
 
 CMD \
-    # Tls
-    bash ${PATH_ROOT}script/tls.sh \
     # Node
-    && node ${PATH_ROOT}dist/scr/Main.js
+    node ${PATH_ROOT}dist/scr/Main.js
 
 EXPOSE ${SERVER_PORT}

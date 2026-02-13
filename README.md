@@ -2,11 +2,15 @@
 
 Microservice cronjob.
 
+It's possible to use a custom certificate, just add it to the "certificate/custom" folder before build the container.
+
+## Info:
+
+-   Cross platform (Windows, Linux)
+
 ## Installation
 
-1. In case of a proxy, place the certificate in the "/certificate/proxy/" folder before starting the build.
-
-2. For build and up write on terminal:
+1. For build and up write on terminal:
 
 ```
 bash docker/container_execute.sh "local" "build-up"

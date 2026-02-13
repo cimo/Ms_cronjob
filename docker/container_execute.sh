@@ -2,6 +2,8 @@
 
 if [ -n "${1}" ] && [ -n "${2}" ]
 then
+    bash "script/tls.sh" "${1}"
+    
     echo "Execute container."
 
     if [ "${2}" = "build-up" ]

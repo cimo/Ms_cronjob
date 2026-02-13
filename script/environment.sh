@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pathEnvFile="./env/${ENV_NAME}.env"
+pathEnvFile="./env/${1}.env"
 
 if [ -f "${pathEnvFile}" ]
 then
