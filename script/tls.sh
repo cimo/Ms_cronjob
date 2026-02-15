@@ -1,9 +1,8 @@
 #!/bin/bash
 
 p1=$(printf '%s' "${1}" | xargs)
-p2=$(printf '%s' "${2}" | xargs)
 
-if [ -z "${p1}" ] || [ -z "${p2}" ]
+if [ -z "${p1}" ]
 then
     echo "tls.sh - Missing parameter."
 
@@ -11,17 +10,12 @@ then
 fi
 
 parameter1="${1}"
-parameter2="${2}"
-
-# Environment
-chmod +x "./script/environment.sh"
-source "./script/environment.sh" "${parameter1}"
 
 pathCaKey="./certificate/ca.key"
 pathCaPem="./certificate/ca.pem"
 pathKey="./certificate/tls.key"
 pathCrt="./certificate/tls.crt"
-pathLog="${MS_C_PATH_LOG}tls.log"
+pathLog="./log/tls.log"
 
 generate() {
     echo "Generate certificate."
@@ -35,7 +29,7 @@ generate() {
     openssl genrsa -out "${pathKey}" 4096 >> "${pathLog}" 2>&1
 
     openssl req -new -key "${pathKey}" \
-        -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=${DOMAIN}" \
+        -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=localhost" \
         -addext "subjectAltName=DNS:localhost,DNS:host.docker.internal,DNS:cimo-ms-ai-cpu,DNS:cimo-ms-ai-gpu,DNS:cimo-ms-antivirus,DNS:cimo-ms-automate-test,DNS:cimo-ms-cronjob,DNS:cimo-ms-file-converter,DNS:cimo-ms-mcp,DNS:cimo-ms-ocr-cpu,DNS:cimo-ms-ocr-gpu,IP:127.0.0.1" \
         -addext "extendedKeyUsage=serverAuth" \
         -addext "basicConstraints=CA:FALSE" \
@@ -58,7 +52,7 @@ then
     currentDateTimestamp=$(date +%s)
     expiryDifference=$((${expiryTimestamp} - ${currentDateTimestamp}))
     
-    if [ "${parameter2}" = "force" ]
+    if [ "${parameter1}" = "force" ]
     then
         generate
     else

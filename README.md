@@ -42,5 +42,5 @@ bash docker/container_execute.sh "local" "up"
 1. To force certificate regeneration write on terminal:
 
     ```
-    bash script/tls.sh "local" "force"
+    bash script/tls.sh "force"
     ```

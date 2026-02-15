@@ -13,7 +13,7 @@ fi
 parameter1="${1}"
 parameter2="${2}"
 
-bash "./script/tls.sh" "${parameter1}" "-"
+bash "./script/tls.sh" "-"
 
 echo "Execute container."
 
