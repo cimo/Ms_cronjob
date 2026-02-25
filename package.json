@@ -22,14 +22,14 @@
         "@cimo/cronjob": "1.0.10"
     },
     "devDependencies": {
-        "typescript": "5.7.2",
-        "eslint": "9.31.0",
+        "@types/node": "22.10.2",
         "@typescript-eslint/parser": "8.24.1",
         "@typescript-eslint/eslint-plugin": "8.24.1",
-        "eslint-plugin-prettier": "5.2.1",
-        "prettier": "3.4.2",
+        "typescript": "5.7.2",
         "nodemon": "3.1.9",
-        "@types/node": "22.10.2"
+        "prettier": "3.4.2",
+        "eslint": "9.31.0",
+        "eslint-plugin-prettier": "5.2.1"
     },
     "resolutions": {}
 }
