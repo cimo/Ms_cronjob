@@ -1,4 +1,4 @@
-FROM ubuntu:26.04
+FROM ubuntu:24.04
 
 ARG _ENV_NAME
 ARG _DOMAIN
@@ -62,12 +62,10 @@ WORKDIR ${PATH_ROOT}
 
 RUN \
     # Npm
-    rm -rf ${PATH_ROOT}node_modules/ ${PATH_ROOT}package-lock.json \
-    && npm install \
-    && npm run build
+    bash ${PATH_ROOT}script/npm.sh "build"
 
 CMD \
-    # Node
-    node ${PATH_ROOT}dist/scr/Main.js
+    # NodeJs
+    bash ${PATH_ROOT}script/nodejs.sh
 
 EXPOSE ${SERVER_PORT}
