@@ -16,6 +16,8 @@ pathCaPem="./certificate/ca.pem"
 pathKey="./certificate/tls.key"
 pathCrt="./certificate/tls.crt"
 pathLog="./log/tls.log"
+subject="/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=CIMO-LOCAL-CA"
+subjectAltName="subjectAltName=DNS:localhost,DNS:host.docker.internal,DNS:cimo-ms-ai-cpu,DNS:cimo-ms-ai-gpu,DNS:cimo-ms-antivirus,DNS:cimo-ms-automate-test,DNS:cimo-ms-cronjob,DNS:cimo-ms-file-converter,DNS:cimo-ms-mcp,DNS:cimo-ms-ocr-cpu,DNS:cimo-ms-ocr-gpu,IP:127.0.0.1"
 
 generate() {
     echo "Generate certificate."
@@ -24,13 +26,13 @@ generate() {
 
     openssl req -x509 -new -nodes -key "${pathCaKey}" -sha256 -days 365 \
         -out "${pathCaPem}" \
-        -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=CIMO-LOCAL-CA" >> "${pathLog}" 2>&1
+        -subj "${subject}" >> "${pathLog}" 2>&1
 
     openssl genrsa -out "${pathKey}" 4096 >> "${pathLog}" 2>&1
 
     openssl req -new -key "${pathKey}" \
-        -subj "/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=localhost" \
-        -addext "subjectAltName=DNS:localhost,DNS:host.docker.internal,DNS:cimo-ms-ai-cpu,DNS:cimo-ms-ai-gpu,DNS:cimo-ms-antivirus,DNS:cimo-ms-automate-test,DNS:cimo-ms-cronjob,DNS:cimo-ms-file-converter,DNS:cimo-ms-mcp,DNS:cimo-ms-ocr-cpu,DNS:cimo-ms-ocr-gpu,IP:127.0.0.1" \
+        -subj "${subject}" \
+        -addext "${subjectAltName}" \
         -addext "extendedKeyUsage=serverAuth" \
         -addext "basicConstraints=CA:FALSE" \
         -out "./certificate/tls.csr" >> "${pathLog}" 2>&1
