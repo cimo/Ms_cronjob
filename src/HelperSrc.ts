@@ -23,6 +23,8 @@ export const PATH_FILE = Ce.checkVariable("MS_C_PATH_FILE");
 export const PATH_LOG = Ce.checkVariable("MS_C_PATH_LOG");
 export const PATH_SCRIPT = Ce.checkVariable("MS_C_PATH_SCRIPT");
 
+Ce.loadFile(`./env/${ENV_NAME}.secret.env`);
+
 export const localeConfiguration: Record<string, { locale: string; currency: string; dateFormat: string }> = {
     // Asia
     jp: { locale: "ja-JP", currency: "JPY", dateFormat: "a" },

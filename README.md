@@ -8,6 +8,10 @@ It's possible to use a custom certificate instead of internal, just add it to th
 
 -   Cross platform (Windows, Linux)
 
+## Secret env
+
+1. Create "local.secret.env" file in "env" folder and add there only the secret variable.
+
 ## Installation
 
 1. For build and up write on terminal:
