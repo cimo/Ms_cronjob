@@ -32,7 +32,6 @@ certificate/**/*
 !certificate/**/
 !certificate/**/.gitkeep
 dist
-env/*.secret.*
 log/*
 !log/.gitkeep
 node_modules
