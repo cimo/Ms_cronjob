@@ -7,7 +7,7 @@ p2=$(printf '%s' "${2}" | xargs)
 
 if [ "$#" -lt 2 ]
 then
-    echo "container_execute.sh - Missing parameter."
+    echo -e "\n❌ container_execute.sh - Missing parameter."
 
     exit 1
 fi
@@ -17,7 +17,7 @@ parameter2="${2}"
 
 bash "./script/tls.sh" ""
 
-echo "Execute container."
+echo -e "\nExecute container."
 
 if [ "${parameter2}" = "build-up" ]
 then

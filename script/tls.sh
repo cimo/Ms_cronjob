@@ -6,7 +6,7 @@ p1=$(printf '%s' "${1}" | xargs)
 
 if [ "$#" -lt 1 ]
 then
-    echo "tls.sh - Missing parameter."
+    echo -e "\n❌ tls.sh - Missing parameter."
 
     exit 1
 fi
@@ -22,7 +22,7 @@ subject="/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=CIMO-LOCAL-CA"
 subjectAltName="subjectAltName=DNS:localhost,DNS:host.docker.internal,DNS:cimo-ms-ai-cpu,DNS:cimo-ms-ai-gpu,DNS:cimo-ms-antivirus,DNS:cimo-ms-automate-test,DNS:cimo-ms-cronjob,DNS:cimo-ms-file-converter,DNS:cimo-ms-mcp,DNS:cimo-ms-ocr-cpu,DNS:cimo-ms-ocr-gpu,IP:127.0.0.1"
 
 generate() {
-    echo "Generate certificate."
+    echo -e "\nGenerate certificate."
 
     openssl genrsa -out "${pathCaKey}" 4096 >> "${pathLog}" 2>&1
 
@@ -62,11 +62,11 @@ then
     else
         if [ ${expiryDifference} -lt 259200 ]
         then
-            echo "Current certificate expires within 3 days." >> "${pathLog}"
+            echo -e "\n⚠️  Current certificate expires within 3 days." >> "${pathLog}"
 
             generate
         else
-            echo "Certificate exists and is valid." >> "${pathLog}"
+            echo -e "\n✅ Certificate exists and is valid." >> "${pathLog}"
         fi
     fi
 else
