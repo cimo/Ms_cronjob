@@ -7,7 +7,7 @@ Just add it to the "/certificate/custom/" folder and change the env variable bef
 
 ## Info:
 
-- Cross platform (Windows, Linux)
+-   Cross platform (Windows, Linux)
 
 ## Installation from source
 
