@@ -7,7 +7,7 @@ Just add it to the "/certificate/custom/" folder and change the env variable bef
 
 ## Info:
 
--   Cross platform (Windows, Linux)
+- Cross platform (Windows, Linux)
 
 ## Installation from source
 
@@ -25,11 +25,18 @@ bash docker/container_execute.sh "local" "up"
 
 ## Installation from hub image
 
-1. Create a "docker-compose.yaml" file and insert:
+1. Create the folder:
+- /certificate/custom/
+- /certificate/proxy/
+- /env/
+- /file/cronjob/
+- /log/
+
+2. Create a "docker-compose.yaml" file and insert (replace xxx with your preferred name):
 ```
 services:
-  tp_ms_cronjob:
-    container_name: tp-ms-cronjob
+  xxx_ms_cronjob:
+    container_name: xxx-ms-cronjob
     env_file:
       - ./env/local.env
       - ./env/local.secret.env
@@ -55,13 +62,10 @@ volumes:
   ms_cronjob-volume:
 ```
 
-2. Create the folder in the root:
-- env
-- certificate
-- file
-- log
+3. Copy the files "local.env" and "local.secret.env" from the source in "env" folder and replace "local" with your preferred name.
+Change the variable values as needed.
 
-3. For build and up write on terminal:
+4. For build and up write on terminal:
 
 ```
 docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./env/local.secret.env build --no-cache &&
