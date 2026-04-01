@@ -81,6 +81,7 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./en
     - .local
     - .npm
     - .pki
+    - .venv
     - dist
     - node_modules
     - package-lock.json
