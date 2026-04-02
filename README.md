@@ -23,7 +23,7 @@ bash docker/container_execute.sh "local" "up"
 ```
 
 ## Installation from hub image
-1. Create the root folder "ms_cronjob" and create this folder inside:
+1. Create the root folder "/ms_cronjob/" and create this folder inside:
     - /certificate/custom/
     - /certificate/proxy/
     - /env/
@@ -60,7 +60,7 @@ volumes:
   ms_cronjob-volume:
 ```
 
-3. Copy the files "local.env" and "local.secret.env" from the github repository "https://github.com/cimo/Ms_cronjob.git", put it in your local "/ms_cronjob/env/" folder (you can replace "local" with your preferred name).
+3. Copy the files "local.env" and "local.secret.env" from the github repository "https://github.com/cimo/Ms_cronjob.git", put it in your root folder "/ms_cronjob/env/" (you can replace "local" with your preferred name).
 Change the variable values as needed.
 
 4. For use the cronjob logic follow the example in this repository:
