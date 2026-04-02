@@ -87,7 +87,7 @@ MS_C_PATH_LOG='log/'
 MS_C_PATH_SCRIPT='script/'
 ```
 
-4. Create the "/ms_cronjob/env/local/secret.env" (will be use only for secret value).
+4. Create the "/ms_cronjob/env/local/secret.env" file (will be use only for secret value).
 
 5. For use the cronjob logic follow the "example" in this repository:
 
