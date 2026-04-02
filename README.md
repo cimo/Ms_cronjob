@@ -1,36 +1,34 @@
 # Ms_cronjob
-
 Microservice cronjob.
 
-It's possible to use a custom certificate instead of self signed.
+It's possible to use a custom certificate instead of self‑signed.
 Just add it to the "/certificate/custom/" folder and change the env variable before build the container.
 
 ## Info:
-
--   Cross platform (Windows, Linux)
+- Cross platform (Windows, Linux)
 
 ## Installation from source
+1. Clone the repository:
 
-1. For build and up write on terminal:
+    https://github.com/cimo/Ms_cronjob.git
 
+2. For build and up write on terminal:
 ```
 bash docker/container_execute.sh "local" "build-up"
 ```
 
-2. Just for up write on terminal:
-
+3. Just for up write on terminal:
 ```
 bash docker/container_execute.sh "local" "up"
 ```
 
 ## Installation from hub image
-
-1. Create the folder:
-- /certificate/custom/
-- /certificate/proxy/
-- /env/
-- /file/cronjob/
-- /log/
+1. Create the root folder "ms_cronjob" and create this folder inside:
+    - /certificate/custom/
+    - /certificate/proxy/
+    - /env/
+    - /file/cronjob/
+    - /log/
 
 2. Create a "docker-compose.yaml" file and insert (replace xxx with your preferred name):
 ```
@@ -62,20 +60,20 @@ volumes:
   ms_cronjob-volume:
 ```
 
-3. Copy the files "local.env" and "local.secret.env" from the source in "env" folder and replace "local" with your preferred name.
+3. Copy the files "local.env" and "local.secret.env" from the github repository "https://github.com/cimo/Ms_cronjob.git", put it in your local "/ms_cronjob/env/" folder (you can replace "local" with your preferred name).
 Change the variable values as needed.
 
-4. For build and up write on terminal:
+4. For use the cronjob logic follow the example in this repository:
 
+    https://github.com/cimo/Ms_cronjob.git
+
+5. For up write on terminal:
 ```
-docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./env/local.secret.env build --no-cache &&
 docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./env/local.secret.env up --detach --pull always
 ```
 
 ## Reset
-
 1. Delete this from the root:
-
     - .cache
     - .config
     - .local
@@ -89,9 +87,7 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./en
 2. Follow the "Installation" instructions.
 
 ## Command
-
-1. To force certificate regeneration write on terminal:
-
-    ```
-    bash script/tls.sh "force"
-    ```
+1. To force self‑signed certificate regeneration write on terminal:
+```
+bash script/tls.sh "force"
+```
