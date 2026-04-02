@@ -30,7 +30,7 @@ bash docker/container_execute.sh "local" "up"
     - /file/cronjob/
     - /log/
 
-2. Create a "docker-compose.yaml" file and insert (replace xxx with your preferred name):
+2. Create a "docker-compose.yaml" file in the root folder and insert (replace xxx with your preferred name):
 ```
 services:
   xxx_ms_cronjob:
@@ -60,14 +60,40 @@ volumes:
   ms_cronjob-volume:
 ```
 
-3. Copy the files "local.env" and "local.secret.env" from the github repository "https://github.com/cimo/Ms_cronjob.git", put it in your root folder "/ms_cronjob/env/" (you can replace "local" with your preferred name).
-Change the variable values as needed.
+3. Create the "/ms_cronjob/env/local.env" file and insert (change the variable value as needed):
+```
+BUILD_ENV='development'
+COMPOSE_PROJECT_NAME='xxx_local'
+DOCKERFILE=''
 
-4. For use the cronjob logic follow the example in this repository:
+ENV_NAME='local'
+DOMAIN='localhost'
+TIME_ZONE='Asia/Tokyo'
+LANG='C.UTF-8'
+SERVER_PORT='1041'
+PATH_ROOT='/home/app/'
+
+MS_C_NAME='Ms cronjob'
+MS_C_LABEL='ms_c'
+MS_C_IS_DEBUG='true'
+MS_C_NODE_ENV='development'
+MS_C_URL_ROOT=''
+MS_C_URL_CORS_ORIGIN='["http://localhost","https://localhost","http://host.docker.internal","https://host.docker.internal"]'
+MS_C_PATH_CERTIFICATE_KEY='/usr/local/share/ca-certificates/tls.key'
+MS_C_PATH_CERTIFICATE_CRT='/usr/local/share/ca-certificates/tls.crt'
+MS_C_PATH_CERTIFICATE_PEM='/usr/local/share/ca-certificates/ca.pem'
+MS_C_PATH_FILE='file/'
+MS_C_PATH_LOG='log/'
+MS_C_PATH_SCRIPT='script/'
+```
+
+4. Create the "/ms_cronjob/env/local/secret.env" (will be use only for secret value).
+
+5. For use the cronjob logic follow the example in this repository:
 
     https://github.com/cimo/Npm_cronjob
 
-5. For up write on terminal:
+6. For up write on terminal:
 ```
 docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./env/local.secret.env up --detach --pull always
 ```
