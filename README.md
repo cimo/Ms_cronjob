@@ -65,7 +65,7 @@ Change the variable values as needed.
 
 4. For use the cronjob logic follow the example in this repository:
 
-    https://github.com/cimo/Ms_cronjob.git
+    https://github.com/cimo/Npm_cronjob
 
 5. For up write on terminal:
 ```
