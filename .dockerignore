@@ -29,10 +29,6 @@ pnpm-debug.log*
 .npmrc
 .pki
 .venv
-certificate/**
-!certificate/.gitkeep
-!certificate/custom/.gitkeep
-!certificate/proxy/.gitkeep
 dist
 log/*
 !log/.gitkeep
