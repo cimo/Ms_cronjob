@@ -101,7 +101,6 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./en
 ## Reset
 1. Delete this from the root:
     - .cache
-    - .config
     - .local
     - .npm
     - .pki
