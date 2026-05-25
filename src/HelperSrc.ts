@@ -58,9 +58,9 @@ export const localeConfiguration: Record<string, { locale: string; currency: str
 };
 
 export const localeFromEnvName = (): string => {
-    let result = ENV_NAME.split("_").pop();
+    let result = ENV_NAME.split("_").pop() as string;
 
-    if (!result || result === "local") {
+    if (result === "" || result === "local") {
         result = "jp";
     }
 
