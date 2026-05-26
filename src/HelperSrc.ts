@@ -1,5 +1,9 @@
 import Fs from "fs";
+import { exec, ExecException } from "child_process";
 import { Ce } from "@cimo/environment/dist/src/Main.js";
+
+// Source
+import * as modelHelperSrc from "./model/HelperSrc.js";
 
 export const ENV_NAME = Ce.checkVariable("ENV_NAME") || (process.env["ENV_NAME"] as string);
 
@@ -21,7 +25,13 @@ export const PATH_CERTIFICATE_CRT = Ce.checkVariable("MS_C_PATH_CERTIFICATE_CRT"
 export const PATH_CERTIFICATE_PEM = Ce.checkVariable("MS_C_PATH_CERTIFICATE_PEM");
 export const PATH_FILE = Ce.checkVariable("MS_C_PATH_FILE");
 export const PATH_LOG = Ce.checkVariable("MS_C_PATH_LOG");
+export const PATH_PUBLIC = "";
 export const PATH_SCRIPT = Ce.checkVariable("MS_C_PATH_SCRIPT");
+export const MIME_TYPE = '[""]';
+export const FILE_SIZE_MB = "";
+
+// Custom
+// Custom
 
 Ce.loadFile(`./env/${ENV_NAME}.secret.env`);
 
@@ -132,3 +142,260 @@ export const keepProcess = (): void => {
         });
     }
 };
+
+export const fileWriteStream = (filePath: string, buffer: Buffer, callback: (result: NodeJS.ErrnoException | boolean) => void): void => {
+    const writeStream = Fs.createWriteStream(filePath);
+
+    writeStream.on("open", () => {
+        writeStream.write(buffer);
+        writeStream.end();
+    });
+
+    writeStream.on("finish", () => {
+        callback(true);
+    });
+
+    writeStream.on("error", (error: Error) => {
+        callback(error);
+    });
+};
+
+export const fileReadStream = (filePath: string, callback: (result: NodeJS.ErrnoException | Buffer) => void): void => {
+    const chunkList: Buffer[] = [];
+
+    const readStream = Fs.createReadStream(filePath);
+
+    readStream.on("data", (chunk: Buffer) => {
+        chunkList.push(chunk);
+    });
+
+    readStream.on("end", () => {
+        callback(Buffer.concat(chunkList));
+    });
+
+    readStream.on("error", (error: Error) => {
+        callback(error);
+    });
+};
+
+export const fileOrFolderDelete = (path: string, callback: (result: NodeJS.ErrnoException | boolean) => void): void => {
+    Fs.stat(path, (error, stats) => {
+        if (error) {
+            return callback(error);
+        }
+
+        if (stats.isDirectory()) {
+            Fs.rm(path, { recursive: true, force: true }, (error) => {
+                if (error) {
+                    return callback(error);
+                }
+
+                callback(true);
+            });
+        } else {
+            Fs.unlink(path, (error) => {
+                if (error) {
+                    return callback(error);
+                }
+
+                callback(true);
+            });
+        }
+    });
+};
+
+export const fileCheckMimeType = (value: string): boolean => {
+    if (MIME_TYPE && MIME_TYPE.includes(value)) {
+        return true;
+    }
+
+    return false;
+};
+
+export const fileCheckSize = (byte: number): boolean => {
+    const maxSizeByte = parseInt(FILE_SIZE_MB) * 1024 * 1024;
+
+    if (byte > maxSizeByte) {
+        return false;
+    }
+
+    return true;
+};
+
+export const isJson = (value: string): boolean => {
+    try {
+        JSON.parse(value);
+
+        return true;
+    } catch {
+        return false;
+    }
+};
+
+export const deleteAnsiEscape = (text: string): string => {
+    const regex = new RegExp(["\x1b", "[", "[0-9;]*", "[a-zA-Z]"].join(""), "g");
+
+    return text.replace(regex, "");
+};
+
+export const generateUniqueId = (): string => {
+    const timestamp = Date.now().toString(36);
+    const randomPart = crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
+
+    return `${timestamp}-${randomPart}`;
+};
+
+export const findFileInDirectoryRecursive = (path: string, extension: string, callback: (resultList: string[]) => void): void => {
+    const resultList: string[] = [];
+
+    Fs.access(path, Fs.constants.F_OK, (errorAccess) => {
+        if (errorAccess) {
+            return callback(resultList);
+        }
+
+        Fs.readdir(path, (errorReadDir, dataList) => {
+            if (errorReadDir) {
+                return callback(resultList);
+            }
+
+            let count = 0;
+
+            const next = () => {
+                if (count >= dataList.length) {
+                    return callback(resultList);
+                }
+
+                const data = dataList[count++];
+                const pathData = `${path}${data}`;
+
+                Fs.stat(pathData, (errorStat, statData) => {
+                    if (!errorStat && statData.isDirectory()) {
+                        findFileInDirectoryRecursive(`${pathData}/`, extension, (dataSubList) => {
+                            for (const dataSub of dataSubList) {
+                                resultList.push(dataSub);
+                            }
+
+                            next();
+                        });
+                    } else if (!errorStat && statData.isFile() && (data.endsWith(extension) || extension === ".*")) {
+                        resultList.push(pathData);
+
+                        next();
+                    } else {
+                        next();
+                    }
+                });
+            };
+
+            next();
+        });
+    });
+};
+
+export const readMimeType = (byteList: Uint8Array): modelHelperSrc.ImimeType => {
+    const toHex = (byteList: Uint8Array) => {
+        let out = "";
+        for (let i = 0; i < byteList.length; i++) {
+            out += byteList[i].toString(16).padStart(2, "0");
+        }
+        return out;
+    };
+
+    const toLatin1 = (byteList: Uint8Array) => {
+        const chunk = 0x8000;
+
+        let result = "";
+
+        for (let a = 0; a < byteList.length; a += chunk) {
+            const subChunk = byteList.subarray(a, a + chunk);
+
+            result += String.fromCharCode(...subChunk);
+        }
+
+        return result;
+    };
+
+    if (toHex(byteList.subarray(0, 3)) === "ffd8ff") {
+        return { content: "image/jpeg", extension: "jpg" };
+    } else if (toHex(byteList.subarray(0, 8)) === "89504e470d0a1a0a") {
+        return { content: "image/png", extension: "png" };
+    } else if (toHex(byteList.subarray(0, 4)) === "49492a00" || toHex(byteList.subarray(0, 4)) === "4d4d002a") {
+        return { content: "image/tiff", extension: "tiff" };
+    } else if (toHex(byteList.subarray(0, 4)) === "25504446") {
+        return { content: "application/pdf", extension: "pdf" };
+    } else if (toHex(byteList.subarray(0, 2)) === "504b") {
+        const headBytes = byteList.subarray(0, Math.min(byteList.length, 64 * 1024));
+        const head = toLatin1(headBytes);
+
+        if (head.includes("word/")) {
+            return {
+                content: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                extension: "docx"
+            };
+        } else if (head.includes("xl/")) {
+            return {
+                content: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                extension: "xlsx"
+            };
+        } else if (head.includes("ppt/")) {
+            return {
+                content: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                extension: "pptx"
+            };
+        }
+    }
+
+    return { content: "", extension: "" };
+};
+
+export const baseFileName = (fileName: string): string => {
+    const nameList = fileName.split("/");
+    const nameWithExtension = nameList[nameList.length - 1];
+    const baseName = nameWithExtension.trim().replace(/.[^/.]+$/, "");
+
+    return baseName;
+};
+
+export const terminalExecution = async (command: string): Promise<string | ExecException> => {
+    return await new Promise<string | ExecException>((resolve) => {
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                resolve(error);
+            } else if (stderr) {
+                resolve(stderr);
+            } else {
+                resolve(stdout);
+            }
+        });
+    });
+};
+
+export const filterMimeType = (fileName: string): string => {
+    let result = "";
+
+    const extension = fileName.toLowerCase().trim().split(".").pop() as string;
+    const mimeTypeList = JSON.parse(MIME_TYPE) as string[];
+
+    for (const mimeType of mimeTypeList) {
+        const [left, rightRaw] = mimeType.toLowerCase().split("/", 2);
+
+        let right = rightRaw;
+
+        if (right === "vnd.openxmlformats-officedocument.wordprocessingml.document") {
+            right = "docx";
+        } else if (right === "vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+            right = "xlsx";
+        } else if (right === "vnd.openxmlformats-officedocument.presentationml.presentation") {
+            right = "pptx";
+        }
+
+        if (extension === right) {
+            result = left;
+        }
+    }
+
+    return result;
+};
+
+// Custom
+// Custom

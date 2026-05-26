@@ -22,7 +22,7 @@
         "@cimo/cronjob": "1.0.11"
     },
     "devDependencies": {
-        "@types/node": "22.10.2",
+        "@types/node": "25.3.0",
         "@typescript-eslint/parser": "8.24.1",
         "@typescript-eslint/eslint-plugin": "8.24.1",
         "typescript": "5.7.2",
