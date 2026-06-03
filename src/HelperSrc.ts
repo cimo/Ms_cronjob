@@ -1,6 +1,5 @@
 import Fs from /* webpackIgnore: true */ "fs";
 import { exec, execFile, ChildProcess } from /* webpackIgnore: true */ "child_process";
-import { Request, Response } from /* webpackIgnore: true */ "express";
 import { Ce } from "@cimo/environment/dist/src/Main.js";
 
 // Source
@@ -573,32 +572,6 @@ export const executionFile = (argumentList: string[]): Promise<modelHelperSrc.Ie
     return Object.assign(promise, { process: process! }) as Promise<modelHelperSrc.Iexecution> & {
         process: ChildProcess;
     };
-};
-
-export const headerClientIp = (request: Request): string => {
-    let result = "";
-
-    const forwarded = request.headers["x-forwarded-for"];
-
-    if (typeof forwarded === "string") {
-        result = forwarded;
-    } else if (Array.isArray(forwarded) && forwarded.length > 0) {
-        result = forwarded[0];
-    }
-
-    return result.split(",")[0] || request.ip || "";
-};
-
-export const headerBearerToken = (request: Request): string => {
-    const authorization = request.headers["authorization"];
-
-    return authorization && authorization.startsWith("Bearer ") ? authorization.substring(7) : "";
-};
-
-export const responseBody = (stdoutValue: string, stderrValue: string | Error, response: Response, mode: number): void => {
-    const responseBody: modelHelperSrc.IresponseBody = { response: { stdout: stdoutValue, stderr: stderrValue } };
-
-    response.status(mode).send(responseBody);
 };
 
 // Custom
