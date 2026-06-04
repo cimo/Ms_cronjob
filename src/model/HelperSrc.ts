@@ -15,10 +15,3 @@ export interface Iexecution {
     stdout: string;
     stderr: string;
 }
-
-export interface IresponseBody {
-    response: {
-        stdout: string;
-        stderr: string | Error;
-    };
-}
