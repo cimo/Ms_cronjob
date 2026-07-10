@@ -19,7 +19,7 @@
     },
     "dependencies": {
         "@cimo/environment": "1.0.31",
-        "@cimo/cronjob": "1.0.18"
+        "@cimo/cronjob": "1.0.19"
     },
     "devDependencies": {
         "@types/node": "25.3.0",
