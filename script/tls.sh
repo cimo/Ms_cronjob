@@ -9,7 +9,7 @@ then
     exit 1
 fi
 
-parameter1="${1}"
+parameter1="${p1}"
 
 pathCaKey="./certificate/ca.key"
 pathCaPem="./certificate/ca.pem"
@@ -53,7 +53,7 @@ then
     expiryTimestamp=$(date -d "${expiry}" +%s)
     currentDateTimestamp=$(date +%s)
     expiryDifference=$((${expiryTimestamp} - ${currentDateTimestamp}))
-    
+
     if [ "${parameter1}" = "force" ]
     then
         generate
