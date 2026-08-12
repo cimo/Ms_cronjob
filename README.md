@@ -107,6 +107,7 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./en
     - .venv
     - dist
     - node_modules
+    - package-lock.json
 
 2. Follow the "Installation" instructions.
 
