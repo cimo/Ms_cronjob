@@ -21,8 +21,9 @@ pnpm-debug.log*
 *.sw?
 
 # cimo +
-.Identifier
 .cache
+.git
+.Identifier
 .local
 .npm
 .npmrc
@@ -32,4 +33,3 @@ dist
 log/*
 !log/.gitkeep
 node_modules
-.git
