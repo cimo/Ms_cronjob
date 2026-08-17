@@ -12,12 +12,12 @@ Just add it to the "/certificate/custom/" folder and change the env variable bef
 
     https://github.com/cimo/Ms_cronjob.git
 
-2. For build and up write on terminal:
+2. For build and up write on host terminal:
 ```
 bash docker/container_execute.sh "local" "build-up"
 ```
 
-3. Just for up write on terminal:
+3. Just for up write on host terminal:
 ```
 bash docker/container_execute.sh "local" "up"
 ```
@@ -93,7 +93,7 @@ MS_C_PATH_SCRIPT='script/'
 
     https://github.com/cimo/Npm_cronjob
 
-6. For up write on terminal:
+6. For up write on host terminal:
 ```
 docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./env/local.secret.env up --detach --pull always
 ```
@@ -111,8 +111,16 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./en
 
 2. Follow the "Installation" instructions.
 
-## Command
-1. To force self‑signed certificate regeneration write on terminal:
+## Tls
+1. To force self‑signed certificate regeneration write on container terminal:
 ```
 bash script/tls.sh "force"
 ```
+
+## Volume
+1. To update the content write on host terminal:
+```
+bash docker/volume.sh "local"
+```
+
+2. Delete all other containers (keep ms_cronjob) and execute the "up" command from the "Installation" instructions.

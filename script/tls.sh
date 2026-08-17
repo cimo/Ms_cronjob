@@ -26,7 +26,11 @@ generate() {
 
     openssl req -x509 -new -nodes -key "${pathCaKey}" -sha256 -days 365 \
         -out "${pathCaPem}" \
-        -subj "${subject}" >> "${pathLog}" 2>&1
+        -subj "${subject}" \
+        -addext "basicConstraints=critical,CA:TRUE" \
+        -addext "keyUsage=critical,keyCertSign,cRLSign" \
+        -addext "subjectKeyIdentifier=hash" \
+        >> "${pathLog}" 2>&1
 
     openssl genrsa -out "${pathKey}" 4096 >> "${pathLog}" 2>&1
 
@@ -34,6 +38,7 @@ generate() {
         -subj "${subject}" \
         -addext "${subjectAltName}" \
         -addext "extendedKeyUsage=serverAuth" \
+        -addext "keyUsage=critical,digitalSignature,keyEncipherment" \
         -addext "basicConstraints=CA:FALSE" \
         -out "./certificate/tls.csr" >> "${pathLog}" 2>&1
 
@@ -58,7 +63,7 @@ then
     then
         generate
     else
-        if [ ${expiryDifference} -lt 259200 ]
+        if [ "${expiryDifference}" -lt 259200 ]
         then
             echo -e "\n⚠️  Current certificate expires within 3 days." >> "${pathLog}"
 
