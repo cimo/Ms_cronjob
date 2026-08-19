@@ -17,7 +17,8 @@ docker run --rm \
 -v "cimo_${parameter1}_ms_cronjob-volume:/home/target/" \
 -v "$(pwd)/certificate/:/home/source/:ro" \
 alpine sh -c '
-cp "/home/source/ca.key" "/home/source/ca.pem" "/home/source/tls.crt" "/home/source/tls.key" "/home/target/" &&
-chown "$HOST_UID:$HOST_GID" "/home/target/ca.key" "/home/target/ca.pem" "/home/target/tls.crt" "/home/target/tls.key" &&
-chmod 644 "/home/target/ca.pem" "/home/target/tls.crt" && chmod 600 "/home/target/ca.key" "/home/target/tls.key"
+cp -a "/home/source/." "/home/target/" &&
+chown -R "${HOST_UID}:${HOST_GID}" "/home/target/" &&
+chmod -R u+rwX,go+rX "/home/target/" &&
+chmod 600 "/home/target/ca.key" "/home/target/tls.key"
 '

@@ -17,11 +17,10 @@ pathKey="./certificate/tls.key"
 pathCrt="./certificate/tls.crt"
 pathLog="./log/tls.log"
 subject="/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=CIMO-LOCAL-CA"
+subjectLeaf="/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=localhost"
 subjectAltName="subjectAltName=DNS:localhost,DNS:host.docker.internal,DNS:cimo-ms-ai-cpu,DNS:cimo-ms-ai-gpu,DNS:cimo-ms-antivirus,DNS:cimo-ms-automate-test,DNS:cimo-ms-cronjob,DNS:cimo-ms-file-converter,DNS:cimo-ms-mcp,DNS:cimo-ms-mcp-db,DNS:cimo-ms-ocr-cpu,DNS:cimo-ms-ocr-gpu,DNS:cimo-ms-security-scan,DNS:cimo-ow-apache,DNS:cimo-ow-nodejs-cpu,DNS:cimo-ow-nodejs-gpu,DNS:cimo-ow-python-cpu,DNS:cimo-ow-python-gpu,IP:127.0.0.1"
 
 generate() {
-    echo -e "\n🔧 Generate certificate." >> "${pathLog}"
-
     openssl genrsa -out "${pathCaKey}" 4096 >> "${pathLog}" 2>&1
 
     openssl req -x509 -new -nodes -key "${pathCaKey}" -sha256 -days 365 \
@@ -35,7 +34,7 @@ generate() {
     openssl genrsa -out "${pathKey}" 4096 >> "${pathLog}" 2>&1
 
     openssl req -new -key "${pathKey}" \
-        -subj "${subject}" \
+        -subj "${subjectLeaf}" \
         -addext "${subjectAltName}" \
         -addext "extendedKeyUsage=serverAuth" \
         -addext "keyUsage=critical,digitalSignature,keyEncipherment" \
@@ -49,7 +48,10 @@ generate() {
 
     rm -f "./certificate/tls.csr"
 
+    chmod 600 "${pathCaKey}"
     chmod 600 "${pathKey}"
+
+    echo -e "\n🔧 Certificate generated." >> "${pathLog}"
 }
 
 if [ -f "${pathCrt}" ]
@@ -65,13 +67,21 @@ then
     else
         if [ "${expiryDifference}" -lt 259200 ]
         then
-            echo -e "\n⚠️  Current certificate expires within 3 days." >> "${pathLog}"
-
-            generate
+            if [ "${parameter1}" = "check" ]
+            then
+                echo -e "\n⚠️  Current certificate expires within 3 days." >> "${pathLog}"
+            else
+                generate
+            fi
         else
             echo -e "\n✅ Certificate exists and is valid." >> "${pathLog}"
         fi
     fi
 else
-    generate
+    if [ "${parameter1}" = "check" ]
+    then
+        echo -e "\n⚠️  Certificate not found." >> "${pathLog}"
+    else
+        generate
+    fi
 fi
