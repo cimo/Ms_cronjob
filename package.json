@@ -17,8 +17,8 @@
         "execute": "nodemon --config nodemon.json"
     },
     "dependencies": {
-        "@cimo/environment": "1.0.31",
-        "@cimo/cronjob": "1.0.19"
+        "@cimo/environment": "1.0.32",
+        "@cimo/cronjob": "1.0.20"
     },
     "devDependencies": {
         "@types/node": "25.3.0",
