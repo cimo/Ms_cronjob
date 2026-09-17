@@ -69,24 +69,12 @@ then
     if [ "${parameter1}" = "force" ]
     then
         generate
+    elif [ "${expiryDifference}" -lt 259200 ]
+    then
+        echo -e "\n⚠️  Current certificate expires within 3 days." >> "${pathLog}"
     else
-        if [ "${expiryDifference}" -lt 259200 ]
-        then
-            if [ "${parameter1}" = "check" ]
-            then
-                echo -e "\n⚠️  Current certificate expires within 3 days." >> "${pathLog}"
-            else
-                generate
-            fi
-        else
-            echo -e "\n✅ Certificate exists and is valid." >> "${pathLog}"
-        fi
+        echo -e "\n✅ Certificate exists and is valid." >> "${pathLog}"
     fi
 else
-    if [ "${parameter1}" = "check" ]
-    then
-        echo -e "\n⚠️  Certificate not found." >> "${pathLog}"
-    else
-        generate
-    fi
+    generate
 fi
