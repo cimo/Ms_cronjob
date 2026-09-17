@@ -20,7 +20,18 @@ volumeName="${projectName}_${parameter1}_ms_cronjob-volume"
 
 bash "./script/tls.sh" "${parameter3}"
 
-if docker volume inspect "${volumeName}" > /dev/null 2>&1
+echo -e "\nExecute container."
+
+if [ "${parameter2}" = "build-up" ]
+then
+    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" build --no-cache &&
+    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" create
+elif [ "${parameter2}" = "up" ]
+then
+    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" create
+fi
+
+if [ "${parameter2}" = "build-up" ] || [ "${parameter2}" = "up" ]
 then
     echo -e "\nCopying to volume..."
 
@@ -34,22 +45,7 @@ then
     chown -R "${HOST_UID}:${HOST_GID}" "/home/target/" &&
     chmod -R u+rwX,go+rX "/home/target/" &&
     chmod 600 "/home/target/ca.key" "/home/target/tls.key"
-    '
-fi
-
-echo -e "\nExecute container."
-
-if [ "${parameter2}" = "build-up" ]
-then
-    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" build --no-cache &&
-    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" up --detach --pull always --wait
-elif [ "${parameter2}" = "up" ]
-then
-    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" up --detach --pull always --wait
-fi
-
-if [ "${parameter2}" = "build-up" ] || [ "${parameter2}" = "up" ]
-then
-    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" exec -u root -T "${projectName}_ms_cronjob" sh -c 'cp -a "${PATH_ROOT}certificate/." "/usr/local/share/ca-certificates/"' &&
+    ' &&
+    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" up --detach --pull always --wait &&
     docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" exec -u root -T "${projectName}_ms_cronjob" update-ca-certificates
 fi
