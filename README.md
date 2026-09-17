@@ -112,15 +112,9 @@ docker compose -f docker-compose.yaml --env-file ./env/local.env --env-file ./en
 2. Follow the "Installation" instructions.
 
 ## Tls
-1. To force self‑signed certificate regeneration write on container terminal:
+1. To force self‑signed certificate regeneration write on host terminal:
 ```
-bash script/tls.sh "force"
-```
-
-## Volume
-1. To update the content write on host terminal:
-```
-bash docker/volume.sh "local"
+bash docker/container_execute.sh "local" "up" "force"
 ```
 
 2. Delete all other containers (keep ms_cronjob) and execute the "up" command from the "Installation" instructions.

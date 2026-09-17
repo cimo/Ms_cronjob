@@ -2,6 +2,7 @@
 
 p1=$(printf '%s' "${1}" | xargs)
 p2=$(printf '%s' "${2}" | xargs)
+p3=$(printf '%s' "${3}" | xargs)
 
 if [ "$#" -lt 2 ]
 then
@@ -12,12 +13,31 @@ fi
 
 parameter1="${p1}"
 parameter2="${p2}"
-
-bash "./script/tls.sh" ""
-
-echo -e "\nExecute container."
+parameter3="${p3}"
 
 projectName="cimo"
+volumeName="${projectName}_${parameter1}_ms_cronjob-volume"
+
+bash "./script/tls.sh" "${parameter3}"
+
+if docker volume inspect "${volumeName}" > /dev/null 2>&1
+then
+    echo -e "\nCopying to volume..."
+
+    docker run --rm \
+    -e HOST_UID="$(id -u)" \
+    -e HOST_GID="$(id -g)" \
+    -v "${volumeName}:/home/target/" \
+    -v "$(pwd)/certificate/:/home/source/:ro" \
+    alpine sh -c '
+    cp -a "/home/source/." "/home/target/" &&
+    chown -R "${HOST_UID}:${HOST_GID}" "/home/target/" &&
+    chmod -R u+rwX,go+rX "/home/target/" &&
+    chmod 600 "/home/target/ca.key" "/home/target/tls.key"
+    '
+fi
+
+echo -e "\nExecute container."
 
 if [ "${parameter2}" = "build-up" ]
 then
