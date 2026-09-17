@@ -18,9 +18,11 @@ pathCrt="./certificate/tls.crt"
 pathLog="./log/tls.log"
 subject="/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=CIMO-LOCAL-CA"
 subjectLeaf="/C=JP/ST=Tokyo/L=Tokyo/O=CIMO/OU=LOCAL/CN=localhost"
-subjectAltName="subjectAltName=DNS:localhost,DNS:host.docker.internal,DNS:cimo-ms-ai-cpu,DNS:cimo-ms-ai-gpu,DNS:cimo-ms-antivirus,DNS:cimo-ms-automate-test,DNS:cimo-ms-cronjob,DNS:cimo-ms-file-converter,DNS:cimo-ms-mcp,DNS:cimo-ms-mcp-db,DNS:cimo-ms-ocr-cpu,DNS:cimo-ms-ocr-gpu,DNS:cimo-ms-security-scan,DNS:cimo-ow-apache,DNS:cimo-ow-nodejs-cpu,DNS:cimo-ow-nodejs-gpu,DNS:cimo-ow-python-cpu,DNS:cimo-ow-python-gpu,IP:127.0.0.1"
+subjectAltName="subjectAltName=DNS:localhost,DNS:host.docker.internal,DNS:cimo-ms-ai-cpu,DNS:cimo-ms-ai-gpu,DNS:cimo-ms-antivirus,DNS:cimo-ms-automate-test,DNS:cimo-ms-cronjob,DNS:cimo-ms-file-converter,DNS:cimo-ms-file-data-extractor-cpu,DNS:cimo-ms-file-data-extractor-gpu,DNS:cimo-ms-mcp,DNS:cimo-ms-mcp-db,DNS:cimo-ms-security-scan,DNS:cimo-ow-apache,DNS:cimo-ow-nodejs-cpu,DNS:cimo-ow-nodejs-gpu,DNS:cimo-ow-python-cpu,DNS:cimo-ow-python-gpu,IP:127.0.0.1"
 
 generate() {
+    echo "" >> "${pathLog}"
+
     openssl genrsa -out "${pathCaKey}" 4096 >> "${pathLog}" 2>&1
 
     openssl req -x509 -new -nodes -key "${pathCaKey}" -sha256 -days 365 \
