@@ -46,6 +46,6 @@ then
     chmod -R u+rwX,go+rX "/home/target/" &&
     chmod 600 "/home/target/ca.key" "/home/target/tls.key"
     ' &&
-    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" up --detach --pull always --wait &&
+    docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" up --detach --pull always --force-recreate --wait &&
     docker compose -f "docker-compose.yaml" --env-file "./env/${parameter1}.env" --env-file "./env/${parameter1}.secret.env" exec -u root -T "${projectName}_ms_cronjob" update-ca-certificates
 fi
