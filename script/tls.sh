@@ -13,6 +13,7 @@ parameter1="${p1}"
 
 pathCaKey="./certificate/ca.key"
 pathCaPem="./certificate/ca.pem"
+pathCaCrt="./certificate/ca.crt"
 pathKey="./certificate/tls.key"
 pathCrt="./certificate/tls.crt"
 pathLog="./log/tls.log"
@@ -32,6 +33,8 @@ generate() {
         -addext "keyUsage=critical,keyCertSign,cRLSign" \
         -addext "subjectKeyIdentifier=hash" \
         >> "${pathLog}" 2>&1
+
+    cp "${pathCaPem}" "${pathCaCrt}"
 
     openssl genrsa -out "${pathKey}" 4096 >> "${pathLog}" 2>&1
 
