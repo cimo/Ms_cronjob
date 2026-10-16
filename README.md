@@ -49,9 +49,9 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - ./certificate/:${PATH_ROOT}/certificate/
-      - ./file/:${PATH_ROOT}/file/
-      - ./log/:${PATH_ROOT}/log/
+      - ./certificate/:${PATH_ROOT}certificate/
+      - ./file/:${PATH_ROOT}file/
+      - ./log/:${PATH_ROOT}log/
       - ms_cronjob-volume:/usr/local/share/ca-certificates/
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/wslg:/mnt/wslg
